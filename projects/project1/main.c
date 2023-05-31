@@ -6,9 +6,7 @@ int main(int argc, char *argv[]) {
    char letter;
    int counter=0;
    int row=0;
-   char line[16];
-
-
+   char line[17];
 
    //open file in command line
    FILE *inFile = fopen(argv[1], "r+");
@@ -18,7 +16,7 @@ int main(int argc, char *argv[]) {
       //enters a new line every 16 loops
       if(counter==16){
          row++;
-         printf("  %s",line);
+         printf("  %*s", 2, line);
          printf("\n");
          counter=0;
       }
@@ -46,8 +44,9 @@ int main(int argc, char *argv[]) {
    for(int i=counter; i<16;i++){
       line[i]=' ';
    }
+
    //prints out the last line
-   printf("  %32s", line);
+   printf("  %*s",31, line);
 
    //closes the file
    fclose(inFile);
