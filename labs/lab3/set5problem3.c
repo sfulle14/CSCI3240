@@ -38,7 +38,7 @@ int main() {
 //
 int* mergeArrays(int arr1[], int arr2[], int size1, int size2){
    int size = size1+size2;
-   static int result[size];
+   int result[size];
 
    //Concatenate arr1 and arr2 into result
    for(int i=0; i<size1; i++){
