@@ -48,6 +48,7 @@ int main(int argc, char *argv[]) {
 
       //prints out the last line
       printf("  %*s",31, line);
+      printf("\n");
 
       //closes the file
       fclose(inFile);
