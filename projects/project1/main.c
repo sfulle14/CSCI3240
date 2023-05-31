@@ -17,9 +17,8 @@ int main(int argc, char *argv[]) {
    FILE *inFile = fopen(argv[1], "r");
    printf("File opened\n");
 
-/*
+
    while(fscanf(inFile, "%c", &letter)){
-      printf("While loop entered\n");
       if(counter==16){
          printf("\n");
          counter=0;
@@ -35,13 +34,13 @@ int main(int argc, char *argv[]) {
       
    }
 
-   
+   /*
    //print out the hex of the file.
    for(int i=0; i<sizeof file; i++){
       printf("%2x", file[i]);
    }
-   
-*/
+   */
+
    fclose(inFile);
    return 0;
 }
