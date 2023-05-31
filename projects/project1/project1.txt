@@ -1,0 +1,15 @@
+Script started on Wed May 31 14:23:44 2023
+[1m[7m%[27m[1m[0m                                                                                                                                      [0m[27m[24m[Jstevenfuller@Stevens-MacBook-Pro22 project1 % [K[?2004hppwd[?2004l
+/Users/stevenfuller/github/CSCI3240/projects/project1
+[1m[7m%[27m[1m[0m                                                                                                                                      [0m[27m[24m[Jstevenfuller@Stevens-MacBook-Pro22 project1 % [K[?2004hlls -l[?2004l
+total 112
+-rw-r--r--  1 stevenfuller  staff    897 May 31 09:55 actualOutput.txt
+-rw-r--r--@ 1 stevenfuller  staff    878 May 31 09:53 expectedOutput.txt
+-rwxr-xr-x  1 stevenfuller  staff  34049 May 31 09:55 main
+-rw-r--r--  1 stevenfuller  staff   1459 May 31 09:54 main.c
+drwxr-xr-x  3 stevenfuller  staff     96 May 29 08:37 main.dSYM
+-rw-r--r--  1 stevenfuller  staff     43 May 31 14:23 project1.txt
+-rw-r--r--@ 1 stevenfuller  staff    202 May 31 08:38 test.txt
+[1m[7m%[27m[1m[0m                                                                                                                                      [0m[27m[24m[Jstevenfuller@Stevens-MacBook-Pro22 project1 % [K[?2004hccat -n project1.c[?2004l
+cat: project1.c: No such file or directory
+[1m[7m%[27m[1m[0m                                                                                                                                      [0m[27m[24m[Jstevenfuller@Stevens-MacBook-Pro22 project1 % [K[?2004h
