@@ -8,15 +8,12 @@ int main(int argc, char *argv[]) {
    int counter =0;
    char dot = '.';
 
-   printf("Variables created\n");
-
    //get the file to parce from the user.
    //scanf("%c", &file[1000]);
    //printf("File loaded\n");
 
+   //open file in command line
    FILE *inFile = fopen(argv[1], "r");
-   printf("File opened\n");
-
 
    while(fscanf(inFile, "%c", &letter)){
       if(counter==16){
