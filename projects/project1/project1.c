@@ -46,8 +46,16 @@ int main(int argc, char *argv[]) {
          line[i]=' ';
       }
 
+      //print out blank spaces to correct spacing on last line.
+      for(int i=counter; i<16; i++){
+         if(i%2==0){
+            printf(" ");
+         }
+         printf("  ");
+      }
+
       //prints out the last line
-      printf("  %*s",31, line);
+      printf("  %s",line);
       printf("\n");
 
       //closes the file
