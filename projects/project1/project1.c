@@ -16,14 +16,14 @@ int main(int argc, char *argv[]) {
       while(fscanf(inFile, "%c", &letter) && !feof(inFile)){
          //enters a new line every 16 loops
          if(counter==16){
-            row++;
+            row+=16;
             printf("  %*s", 2, line);
             printf("\n");
             counter=0;
          }
          //if if is the start of a new line print the hex of the line number
          if(counter==0){
-            printf("%07x0: ", row);
+            printf("%07x: ", row);
          }
          if(counter%2==0){
             printf(" ");
