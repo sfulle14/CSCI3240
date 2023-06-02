@@ -5,7 +5,7 @@ int main() {
    //declare variables
    int numTerms;
    int addTerm=2;
-   int count=1;
+   float count=1.0;
    int x;
 
    //get number of terms from user
@@ -13,7 +13,7 @@ int main() {
    scanf("%d", &numTerms);
 
    //get value of x from user
-   printf("Enter x: ");
+   printf("Enter integer x: ");
    scanf("%d", &x);
 
    //loop to compute 1–x^2 +x^4 –x^6 +x^8 -.........nth term
@@ -23,7 +23,7 @@ int main() {
 
    }
    //prints out result
-   printf("The nth term is: %d", count);
+   printf("The nth term is: %f", count);
    
    return 0;
 }
