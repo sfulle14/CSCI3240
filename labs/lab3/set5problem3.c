@@ -25,7 +25,6 @@ int main() {
    arr2[3]=5;
 
    array = mergeArrays(arr1, arr2, size1, size2);
-
    
    printf("Main array: ");
    for(int i=0; i<sizeof(array); i++){
@@ -35,10 +34,20 @@ int main() {
    return 0;
 }
 
-//
+//concatenates 2 arrays
+//removes duplicate elements from array
+//sorts array in ascending order
+//returns sorted array
 int* mergeArrays(int arr1[], int arr2[], int size1, int size2){
+   //variable declaration and initialization
    int size = size1+size2;
-   int result[size];
+   int *result = malloc(size * sizeof(int));
+
+   //exits program if memory is not allocated
+   if(result == NULL){
+      printf("Memory not allocated\n");
+      exit(0);
+   }
 
    //Concatenate arr1 and arr2 into result
    for(int i=0; i<size1; i++){
@@ -49,11 +58,13 @@ int* mergeArrays(int arr1[], int arr2[], int size1, int size2){
    }
 
    //print out Concatenated array
+   /*
    printf("Concatenated array: ");
    for(int i=0; i<size; i++){
       printf("%d",result[i]);
    }
    printf("\n");
+   */
    
    //remove duplicated values
    for(int i=0; i<size-1; i++){
@@ -66,21 +77,25 @@ int* mergeArrays(int arr1[], int arr2[], int size1, int size2){
          }
       }
    }
-   
+
    //print out array with removed duplicates
+   /*
    for(int i=0; i<size; i++){
       printf("%d", result[i]);
    }
    printf("\n");
+   */
 
    //sort array in ascending order
    bubbleSort(result, size);
 
    //print out sorted array
+   /*
    for(int i=0; i<size; i++){
       printf("%d", result[i]);
    }
    printf("\n");
+   */
 
    return result;
 }
