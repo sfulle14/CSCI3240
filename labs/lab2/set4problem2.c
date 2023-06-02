@@ -4,20 +4,20 @@
 #define PI 3.1416
 
 //function declaration
-int rectangle(int width, int length);
-float circle(int radius);
+float rectangle(float width, float length);
+float circle(float radius);
 
 int main() {
    //declare variables
-   int radius=0;
-   int width=0;
-   int length=0;
-   int areaR=0;
-   float areaC=0;
+   float radius=0;
+   float width=0;
+   float length=0;
+   float areaR=0;
+   float areaC=0.0;
 
    //get radius from user and call function
    printf("Enter a radius: ");
-   scanf("%d", &radius);
+   scanf("%f", &radius);
 
    //print out the area
    printf("The area of the circle is: %f\n", circle(radius));
@@ -25,22 +25,22 @@ int main() {
 
    //get length and width from user and call function
    printf("Enter a length: ");
-   scanf("%d", &length);
+   scanf("%f", &length);
    printf("Enter a width: ");
-   scanf("%d", &width);
+   scanf("%f", &width);
 
    //print out the area
-   printf("The area of the rectangle is: %d\n", rectangle(width, length));
+   printf("The area of the rectangle is: %f\n", rectangle(width, length));
    
    return 0;
 }
 
 //function to find the area of a rectangle
-int rectangle(int width, int length){
+float rectangle(float width, float length){
    return length * width;
 }
 
 //finction to find the area of a circle
-float circle(int radius){
+float circle(float radius){
    return PI * radius * radius;
 }
