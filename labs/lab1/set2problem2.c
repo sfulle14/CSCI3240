@@ -5,7 +5,7 @@
 int main() {
 
    int salary;
-   int taxes;
+   float taxes;
 
    printf("Enter salary: ");
    scanf("%d", &salary);
@@ -16,11 +16,11 @@ int main() {
    }
    else if(salary < 175000){
       taxes = salary * 0.15;
-      printf("Tax amount is: %d\n", taxes);
+      printf("Tax amount is: %f\n", taxes);
    }
    else{
       taxes = salary * 0.25;
-      printf("Tax amount is: %d\n", taxes);
+      printf("Tax amount is: %f\n", taxes);
    }
 
    return 0;

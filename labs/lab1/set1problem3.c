@@ -10,7 +10,7 @@ int main() {
     printf("Enter the radius of the circle: ");
     scanf("%f", &radius);
 
-    circumference = 2 * PIE * radius;
+    circumference = 2.0 * PIE * radius;
 
     printf("The circumference of your circle is: %f", circumference);
 

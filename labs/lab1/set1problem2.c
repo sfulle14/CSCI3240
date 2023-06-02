@@ -1,17 +1,17 @@
 #include <stdio.h>
 
 int main() {
-   int num;
-   int temp;
+   float num;
+   float temp;
 
    printf("Enter tempurature in F: ");
 
-   scanf("%d", &num);
+   scanf("%f", &num);
 
    //F = (C*9/5) + 32
-   temp = ((num-32) * 5) / 9;
+   temp = ((num-32.0) * 5.0) / 9.0;
 
-   printf("The tempurature in Celsius is: %d", temp);
+   printf("The tempurature in Celsius is: %f", temp);
    
    return 0;
 }
