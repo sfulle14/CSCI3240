@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
          }
          //if if is the start of a new line print the hex of the line number
          if(counter==0){
-            printf("%08x:", row);
+            printf("%07x: ", row);
          }
          if(counter%2==0){
             printf(" ");
@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
          }
          //if the value read in is unprintable print the hex of "."
          else{
-            printf("%02x", letter);
+            printf("%x", '.');
             line[counter] = '.';
             counter++;
          }
@@ -54,12 +54,8 @@ int main(int argc, char *argv[]) {
          printf("  ");
       }
 
-
       //prints out the last line
-      printf("  ");
-      for(int i=0; i<counter; i++){
-         printf("%c", line[i]);
-      }
+      printf("  %s",line);
       printf("\n");
 
       //closes the file
