@@ -1,20 +1,20 @@
 #include <stdio.h>
 
 //function declaration
-float  permutation(int n, int r);
-float  combination(int n, int r);
-int factorial(int num);
+float  permutation(float n, float r);
+float  combination(float n, float r);
+float factorial(float num);
 
 
 int main() {
    //declare variables
-   int n=0;
-   int r=0;
+   float n=0.0;
+   float r=0.0;
 
    printf("Enter a value for n: ");
-   scanf("%d", &n);
+   scanf("%f", &n);
    printf("Enter a value for r: ");
-   scanf("%d", &r);
+   scanf("%f", &r);
    
    printf("The permutation is: %f\n", permutation(n, r));
    printf("The combination is: %f\n", combination(n, r));
@@ -23,19 +23,19 @@ int main() {
 }
 
 //function to calculate permutation
-float  permutation(int n, int r){
+float  permutation(float n, float r){
    return (factorial(n)/factorial(n-r));
 }
 
 //function to calculate combination
-float  combination(int n, int r){  
+float  combination(float n, float r){  
    return (permutation(n,r)/factorial(r));
 }
 
 //function to find the factorial of a user provided number
-int factorial(int num){
-   int sum=1;
-   for(int i=1; i<=num; i++){
+float factorial(float num){
+   float sum=1.0;
+   for(float i=1.0; i<=num; i++){
       sum *= i;
    }
    return sum;
