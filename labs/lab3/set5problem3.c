@@ -13,6 +13,7 @@ int main() {
    int arr1[size1];
    int arr2[size2];
    int* array;
+   int i=0;
    
    arr1[0]=1;
    arr1[1]=2;
@@ -26,9 +27,10 @@ int main() {
 
    array = mergeArrays(arr1, arr2, size1, size2);
    
-   printf("Main array: ");
-   for(int i=0; i<sizeof(array); i++){
+   //loop to print out merged and sorted arrays
+   while(array[i]> array[i-1]){
       printf("%d", array[i]);
+      i++;
    }
    
    return 0;
