@@ -5,6 +5,7 @@
 #define MAX_INPUT 1000
 
 int main() {
+   //variable definition
    FILE *filePtr;
    char fileName[MAX_INPUT];
    char userInput[2];
