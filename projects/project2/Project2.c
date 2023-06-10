@@ -68,11 +68,19 @@ int MysteryFunction4(unsigned long n){
 }
 
 
+//This function is taking 2 inputs and ORing their binary values
+//It then takes that ORed value and counts the 1s
+unsigned int MysteryFunction5(unsigned int A, unsigned int B){
+    //initialize the return value to 0
+    unsigned int result = 0;
+    
+    //looping through the binary for the 2 inputs and ORing them
+    //incrementing result by 1 if only one of them has a 1 at that value
+    for(unsigned i=1 << 31; i>0; i=i/2){
+        if(A&i | B&i){
+            result++;
+        }
+    }
 
-unsigned int MysteryFunction5(unsigned int A, unsigned int B)
-{
-  //TODO
-   //check assembly code for MysteryFunction5 in project2.s
-
+    return result;
 }
-
