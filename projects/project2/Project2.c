@@ -1,7 +1,7 @@
 /* 
  * CSCI3240: Project 2
  * 
- * <Please put your name and userid here>
+ * Steven Fuller sf5g
  * 
  * Project2.c - Source file with your solutions to the Lab.
  *          This is the file you will submit in the D2L -> Project2 dropbox.
@@ -56,7 +56,7 @@ long MysteryFunction3(long *a, int n){
     return result;
 }
 
-
+//this function counts the number of 1s in the binary of the input n.
 int MysteryFunction4(unsigned long n){
     //initialize the return value to 0
     int result = 0;
