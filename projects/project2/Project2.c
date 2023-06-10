@@ -40,18 +40,31 @@ unsigned int MysteryFunction2(unsigned int num)
     return result;
 }
 
-
+//a function to return the address a points to if n is not <=1
+// and if n is <=1 it returns the value a points to
 long MysteryFunction3(long *a, int n){
-   //TODO
-   //check assembly code for MysteryFunction3 in project2.s
+    //initialize the return value to input n
+    long result = n;
+    //if n is less than or equal to 1 then return the value a points to
+    if (n<=1){return *a;}
+    //return the decimal value of the address a points to
+    else{
+        printf("in test Input a= %p\n", a);
+        result = (long)a;
+        return result;
+    }
+    return result;
 }
 
 
-int MysteryFunction4(unsigned long n)
-{
-      //TODO
-   //check assembly code for MysteryFunction4 in project2.s
+int MysteryFunction4(unsigned long n){
+    //initialize the return value to 0
+    int result = 0;
+    for(unsigned i=1 << 31; i>0; i = i/2){
+        if(n&i){result++;}
+    }
 
+    return result;
 }
 
 
