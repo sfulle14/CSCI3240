@@ -18,8 +18,15 @@ int main(int argc, char *argv[])
     host = argv[1];
     port = argv[2];
     clientfd = Open_clientfd(host, port);
-    //getting a message from the user
-    printf("Please enter the message: ");
+
+    //print out user options
+    printf("(1) Add record\n");
+    printf("(2) Search by Name\n");
+    printf("(3) Search by Zip Code\n");
+    printf("(4) Search by Salary\n");
+    printf("(5) Terminate\n");
+    printf("Select an option [1,2,3,4, or 5]: ");
+
     //resetting the buffer
     bzero(buffer,MAXLINE);
     //getting the message from the user
@@ -37,8 +44,13 @@ int main(int argc, char *argv[])
         1. Add a code to send new messages to the server
            (you can ask the user to provide a new message in the terminal)
         2. Wait for the confirmation message (using Rio_readlineb function)
-             from the server and display it.
+            from the server and display it.
     */
+    //resetting the buffer
+    bzero(buffer,MAXLINE);
+    //getting the message from the user
+    Fgets(buffer,MAXLINE,stdin);
+
     Close(clientfd);
     return 0;
 }

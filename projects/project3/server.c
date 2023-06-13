@@ -5,16 +5,45 @@
 
 void serverFunction(int connfd){
     char buffer[MAXLINE]; //MAXLINE = 8192 defined in csapp.h
-    char successMessage[MAXLINE] = "I got your message\n";
-    //TODO:
-    //Add second message here
-    //TODO End
+    char successMessage[MAXLINE] = "Record added Sucessfully!!\n";
+    char firstName[MAXLINE] = "Enter First Name: ";
+    char lastName[MAXLINE] = "Enter Last Name: ";
+    char zipCode[MAXLINE] = "Enter Zip Code: ";
+    char department[MAXLINE] = "Enter Department: ";
+    char salary[MAXLINE] = "Enter Salary: ";
+    char department[MAXLINE] = "Enter Department: ";
+    
     size_t n;
     //resetting the buffer
     bzero(buffer,MAXLINE);
+    //n is the user input
     n = read(connfd, buffer, MAXLINE);
-    printf("server received %ld bytes message\n", n);
-    printf("Message from Client: %s\n",buffer);
+    //make a choice based on user input
+    switch(n){
+        case 1:
+            //get first name
+            write(connfd,firstName,strlen(firstName));
+            bzero(buffer,MAXLINE);
+            n = read(connfd, buffer, MAXLINE);
+
+            write(connfd,lastName,strlen(lastName));
+            bzero(buffer,MAXLINE);
+            n = read(connfd, buffer, MAXLINE);
+
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        default:
+            break;
+    }
+    //printf("server received %ld bytes message\n", n);
+    //printf("Message from Client: %s\n",buffer);
     write(connfd,successMessage,strlen(successMessage));
     /*TODO:
        1. Add a code to receive new messages from the client
