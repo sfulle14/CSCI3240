@@ -11,7 +11,8 @@ void serverFunction(int connfd){
     char zipCode[MAXLINE] = "Enter Zip Code: ";
     char department[MAXLINE] = "Enter Department: ";
     char salary[MAXLINE] = "Enter Salary: ";
-    char department[MAXLINE] = "Enter Department: ";
+    char comparisionType[MAXLINE] = "Enter Comparision Type ['>', '<', '==', '>=', '<=']: ";
+    char connectionClosed[MAXLINE] = "Connection Closed!!";
     
     size_t n;
     //resetting the buffer
@@ -25,30 +26,83 @@ void serverFunction(int connfd){
             write(connfd,firstName,strlen(firstName));
             bzero(buffer,MAXLINE);
             n = read(connfd, buffer, MAXLINE);
+            /*Still need to add to csv file*/
 
+            //get last name
             write(connfd,lastName,strlen(lastName));
+            bzero(buffer,MAXLINE);
+            n = read(connfd, buffer, MAXLINE);
+            /*Still need to add to csv file*/
+
+            //get zip code
+            write(connfd,zipCode,strlen(zipCode));
+            bzero(buffer,MAXLINE);
+            n = read(connfd, buffer, MAXLINE);
+            /*Still need to add to csv file*/
+
+            //get department
+            write(connfd,department,strlen(department));
+            bzero(buffer,MAXLINE);
+            n = read(connfd, buffer, MAXLINE);
+            /*Still need to add to csv file*/
+
+            //get salary
+            write(connfd,salary,strlen(salary));
+            bzero(buffer,MAXLINE);
+            n = read(connfd, buffer, MAXLINE);
+            /*Still need to add to csv file*/
+
+            //report success
+            write(connfd,successMessage,strlen(successMessage));
             bzero(buffer,MAXLINE);
             n = read(connfd, buffer, MAXLINE);
 
             break;
         case 2:
+            //get first name
+            write(connfd,firstName,strlen(firstName));
+            bzero(buffer,MAXLINE);
+            n = read(connfd, buffer, MAXLINE);
+            
+            //get last name
+            write(connfd,lastName,strlen(lastName));
+            bzero(buffer,MAXLINE);
+            n = read(connfd, buffer, MAXLINE);
+
+            /*Still need to search csv file*/
             break;
         case 3:
+            //get zip code
+            write(connfd,zipCode,strlen(zipCode));
+            bzero(buffer,MAXLINE);
+            n = read(connfd, buffer, MAXLINE);
+
+            /*Still need to search csv file*/
             break;
         case 4:
+            //get salary
+            write(connfd,salary,strlen(salary));
+            bzero(buffer,MAXLINE);
+            n = read(connfd, buffer, MAXLINE);
+            //get comparision type
+            write(connfd,comparisionType,strlen(comparisionType));
+            bzero(buffer,MAXLINE);
+            n = read(connfd, buffer, MAXLINE);
+
+            /*Still need to search csv file*/
             break;
         case 5:
+            //send message
+            write(connfd,connectionClosed,strlen(connectionClosed));
+            bzero(buffer,MAXLINE);
+            /*Still need to terminate server*/
             break;
         default:
             break;
     }
     //printf("server received %ld bytes message\n", n);
     //printf("Message from Client: %s\n",buffer);
-    write(connfd,successMessage,strlen(successMessage));
-    /*TODO:
-       1. Add a code to receive new messages from the client
-       2. Send the message "I have received your second message" to the client
-    */
+    //write(connfd,successMessage,strlen(successMessage));
 
     return; 
 }
@@ -62,9 +116,10 @@ int main(int argc, char *argv[])
     char client_hostname[MAXLINE], client_port[MAXLINE];
 
     if (argc != 2) {
-    fprintf(stderr, "usage: %s <port>\n", argv[0]);
-    exit(0);
+        fprintf(stderr, "usage: %s <port>\n", argv[0]);
+        exit(0);
     }
+    
     listenfd = Open_listenfd(argv[1]);
     //Server runs in the infinite loop.
     //To stop the server process, it needs to be killed using the Ctrl+C key.
