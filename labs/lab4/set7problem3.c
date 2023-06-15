@@ -4,6 +4,7 @@
 #define LIMIT 100
 
 int main() {
+   //declare variables
    FILE *filePtr;
    char* filename = "userdata.txt";
    char username[LIMIT];
@@ -11,28 +12,30 @@ int main() {
    char fileUsername[LIMIT];
    char filePassword[LIMIT];
    char fileAmount[LIMIT];
-   char* string;
+   char string[LIMIT*3];
+   int trigger = 0;
 
+   //open file
    filePtr = fopen(filename, "r");
 
-
+   //get user input
    printf("Username: ");
    scanf("%s", username);
-   printf("\n");
    printf("Password: ");
    scanf("%s", password);
-   printf("\n");
+
    
    while(fgets(string, LIMIT, filePtr) != NULL){
       sscanf(string, "%s %s %s", fileUsername, filePassword, fileAmount);
-      if(strcmp(username, fileUsername) && strcmp(password, filePassword)){
+      if(!strcmp(username, fileUsername) && !strcmp(password, filePassword)){
          printf("The amount is: %s\n", fileAmount);
-      }
-      else{
-         printf("username/password mismatch!!!\n");
+         trigger = 1;
       }
    }
-
+   if(trigger==0){
+      printf("username/password mismatch!!!\n");
+   }
+   
    
    return 0;
 }
