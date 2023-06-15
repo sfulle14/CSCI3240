@@ -5,10 +5,10 @@
 #define NAMELIMIT 25
 
 struct batter{
-    char name[NAMELIMIT];
     double battingAvg;
     int runs;
     int dismissals;
+    char name[NAMELIMIT];
 };
 
 int main() {
