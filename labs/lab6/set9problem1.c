@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
-#define FILESIZE 10000
+#define FILESIZE 1000
 #define MAXSTRUCT 100
 #define NAMELIMIT 100
 #define ZIPLIMIT 6
@@ -19,21 +20,21 @@ struct Struct_Employee_Info{
 struct Struct_Employee_Info emp[MAXSTRUCT];
 
 //function declaration
-const char* SearchByName(struct Struct_Employee_Info emp[], char firstName[NAMELIMIT], char lastName[NAMELIMIT]);
+char* SearchByName(struct Struct_Employee_Info emp[], char firstName[NAMELIMIT], char lastName[NAMELIMIT]);
 int SearchByZipCode(struct Struct_Employee_Info employeeStructure, char zipCode[ZIPLIMIT]);
 int SearchBySalary(struct Struct_Employee_Info employeeStructure, char salary[SALARYLIMIT], char comparisonOperator[2]);
 
 int main() {
    //variable declaration
-   char comparisonOperator[2];
    FILE *fp;
-   int count = 0;
+   char* filename = "records.csv";
    char buf[FILESIZE];
    char* token;
+   int count = 0;
+   char comparisonOperator[2];
 
    //open file
-   fp = fopen("records.csv", "a+");
-
+   fp = fopen(filename, "r+");
 
    //read in the csv into the struct
    while(fgets(buf, FILESIZE, fp) != NULL){
@@ -52,10 +53,11 @@ int main() {
 
    printf("%s", SearchByName(emp, "Picasso", "Pablo"));
    
+   fclose(fp);
    return 0;
 }
 
-const char* SearchByName(struct Struct_Employee_Info emp[], char firstName[], char lastName[]){
+char* SearchByName(struct Struct_Employee_Info emp[], char firstName[], char lastName[]){
    char name[200];
    char first[NAMELIMIT];
    char last[NAMELIMIT];
@@ -63,8 +65,10 @@ const char* SearchByName(struct Struct_Employee_Info emp[], char firstName[], ch
    int count = 0;
    char *str;
 
-   firstName[strlen(firstName)-1] = '\0';
-   lastName[strlen(lastName)-1] = '\0';
+   strncpy(first, firstName, strlen(firstName));
+   strncpy(last, lastName, strlen(lastName));
+   first[strlen(first)-1] = '\0';
+   last[strlen(last)-1] = '\0';
 
    strncpy(name, lastName, strlen(lastName));
    strncat(name, ",", 1);
@@ -93,7 +97,7 @@ const char* SearchByName(struct Struct_Employee_Info emp[], char firstName[], ch
    return str;
 }
 
-
+/*
 int SearchByZipCode(struct Struct_Employee_Info employeeStructure, char zipCode[ZIPLIMIT]){
 
    return 0;
@@ -104,3 +108,4 @@ int SearchBySalary(struct Struct_Employee_Info employeeStructure, char salary[SA
 
    return 0;
 }
+*/
