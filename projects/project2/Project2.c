@@ -40,18 +40,18 @@ unsigned int MysteryFunction2(unsigned int num)
     return result;
 }
 
-//a function to return the address a points to if n is not <=1
-// and if n is <=1 it returns the value a points to
+//while i is less then the value a points to this function
+//will miultiply i by 8 and add it to the address of a.
 long MysteryFunction3(long *a, int n){
-    //initialize the return value to input n
-    long result = n;
-    //if n is less than or equal to 1 then return the value a points to
-    if (n<=1){return *a;}
-    //return the decimal value of the address a points to
-    else{
-        printf("in test Input a= %p\n", a);
-        result = (long)a;
-        return result;
+    //initialize the return value to 1
+    long result = 1;
+    //counter
+    long i=1;
+    //while i is less then the value a points to this function
+    //will miultiply i by 8 and add it to the address of a
+    while(i<*a){
+        result = i * 8 + (long)&a;
+        i++;
     }
     return result;
 }
