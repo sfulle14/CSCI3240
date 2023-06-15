@@ -42,9 +42,11 @@ int main() {
     count++;
    }
 
+   //loop to find the top scoring student
    for(int i=0; i<STUDENTNUM; i++){
-    if(topScore < atof(students[i].score)){
+    if(atof(students[i].score) > topScore){
         topStudent = i;
+        topScore = atof(students[i].score);
     }
    }
 
