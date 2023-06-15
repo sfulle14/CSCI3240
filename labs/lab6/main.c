@@ -16,23 +16,28 @@ struct Struct_Employee_Info{
    char salary[SALARYLIMIT];
 };
 
+struct Struct_Employee_Info emp[MAXSTRUCT];
 
+//function declaration
+const char* SearchByName(struct Struct_Employee_Info emp[], char firstName[NAMELIMIT], char lastName[NAMELIMIT]);
+int SearchByZipCode(struct Struct_Employee_Info employeeStructure, char zipCode[ZIPLIMIT]);
+int SearchBySalary(struct Struct_Employee_Info employeeStructure, char salary[SALARYLIMIT], char comparisonOperator[2]);
 
 int main() {
-   struct Struct_Employee_Info emp[MAXSTRUCT];
+   //variable declaration
    char comparisonOperator[2];
    FILE *fp;
-   char *token;
    int count = 0;
+   char buf[FILESIZE];
+   char* token;
 
+   //open file
    fp = fopen("records.csv", "a+");
 
 
-   //get the first token
-   token = strtok(fp, ",");
-
-   //read in all the csv into the struct
-   while(token != NULL){
+   //read in the csv into the struct
+   while(fgets(buf, FILESIZE, fp) != NULL){
+      token = strtok(buf, ",");
       strncpy(emp[count].lastName, token, NAMELIMIT);
       token = strtok(NULL, ",");
       strncpy(emp[count].firstName, token, NAMELIMIT);
@@ -42,21 +47,21 @@ int main() {
       strncpy(emp[count].department, token, DEPTLIMIT);
       token = strtok(NULL, ",");
       strncpy(emp[count].salary, token, SALARYLIMIT);
-      token = strtok(NULL, ",");
       count++;
    }
 
-
-   
+   printf("%s", SearchByName(emp, "Picasso", "Pablo"));
    
    return 0;
 }
 
-int SearchByName(struct Struct_Employee_Info emp, char firstName[NAMELIMIT], char lastName[NAMELIMIT]){
+const char* SearchByName(struct Struct_Employee_Info emp[], char firstName[], char lastName[]){
    char name[200];
    char first[NAMELIMIT];
    char last[NAMELIMIT];
    char lastFirst[200];
+   int count = 0;
+   char *str;
 
    firstName[strlen(firstName)-1] = '\0';
    lastName[strlen(lastName)-1] = '\0';
@@ -73,10 +78,19 @@ int SearchByName(struct Struct_Employee_Info emp, char firstName[NAMELIMIT], cha
       strncat(lastFirst, first, strlen(first));
 
       if(!strcmp(name,lastFirst)){
-         return i;
+         strncpy(str, emp[i].lastName, strlen(emp[i].lastName));
+         strncat(str, ",", 1);
+         strncpy(str, emp[i].firstName, strlen(emp[i].firstName));
+         strncat(str, ",", 1);
+         strncpy(str, emp[i].zipCode, strlen(emp[i].zipCode));
+         strncat(str, ",", 1);
+         strncpy(str, emp[i].department, strlen(emp[i].department));
+         strncat(str, ",", 1);
+         strncpy(str, emp[i].salary, strlen(emp[i].salary));
       }
    }
-   return -1;
+
+   return str;
 }
 
 
