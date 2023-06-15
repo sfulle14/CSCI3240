@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "set1problem1.C": "cpp",
-        "chrono": "c"
+        "chrono": "c",
+        "stdio.h": "c"
     }
 }
