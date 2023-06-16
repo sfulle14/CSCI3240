@@ -45,10 +45,10 @@ int main() {
       count++;
    }
 
-   printf("%s %s %s %s %d\n", emp[0].firstName, emp[0].lastName, emp[0].zipCode, emp[0].department, emp[0].salary);
-
    ch = SearchByName(emp, "Pablo", "Picasso");
    printf("%s\n", ch);
+
+
    
    fclose(fp);
    return 0;
@@ -60,8 +60,6 @@ char* SearchByName(struct Struct_Employee_Info emp[], char firstName[], char las
    static char str[FILESIZE];
    static char* p;
    char salary[SALARYLIMIT];
-
-
 
    //loop to compare all names to provided name
    for(int i=0; i<MAXSTRUCT; i++){
@@ -81,8 +79,6 @@ char* SearchByName(struct Struct_Employee_Info emp[], char firstName[], char las
          strncat(str, "\n", 1);
       }
    }
-
-   printf("%s\n", str);
 
    p = str;
    return p;
