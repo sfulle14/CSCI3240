@@ -32,7 +32,7 @@ int main() {
    char* token;
    int count = 0;
    char comparisonOperator[2];
-   char * ch;
+   char* ch;
 
    struct Struct_Employee_Info emp[MAXSTRUCT];
 
@@ -45,60 +45,49 @@ int main() {
       count++;
    }
 
-   printf("%s %s %s %s %d", emp[1].firstName, emp[1].lastName, emp[1].zipCode, emp[1].department, emp[1].salary);
+   printf("%s %s %s %s %d\n", emp[0].firstName, emp[0].lastName, emp[0].zipCode, emp[0].department, emp[0].salary);
 
-   //ch = SearchByName(emp, "Picasso", "Pablo");
-   //printf("%s", ch);
+   ch = SearchByName(emp, "Pablo", "Picasso");
+   printf("%s\n", ch);
    
    fclose(fp);
    return 0;
 }
-/*
+
 char* SearchByName(struct Struct_Employee_Info emp[], char firstName[], char lastName[]){
    //function variables
-   char name[200];
-   char first[NAMELIMIT];
-   char last[NAMELIMIT];
-   char lastFirst[200];
    int count = 0;
-   char *str[FILESIZE];
+   static char str[FILESIZE];
+   static char* p;
+   char salary[SALARYLIMIT];
 
 
 
    //loop to compare all names to provided name
    for(int i=0; i<MAXSTRUCT; i++){
       //if names are equal then add to a string var
+      //first,last,zip,department,salary
       if(!strcmp(firstName, emp[i].firstName) && !strcmp(lastName, emp[i].lastName)){
-         strncpy(last, emp[i].lastName, strlen(emp[i].lastName));
-         last[strlen(emp[i].lastName)-1] = '\0';
-         strncpy(str[], emp[i].lastName, strlen(emp[i].lastName));
-
+         strncat(str, firstName, strlen(firstName));
          strncat(str, ",", 1);
-
-         strncpy(first, emp[i].firstName, strlen(emp[i].firstName));
-         first[strlen(emp[i].firstName)-1] = '\0';
-         strncpy(str, emp[i].firstName, strlen(emp[i].firstName));
-
+         strncat(str, lastName, strlen(lastName));
          strncat(str, ",", 1);
-
-         emp[i].zipCode[strlen(emp[i].zipCode)-1] = '\0';
-         strncpy(str, emp[i].zipCode, strlen(emp[i].zipCode));
-
+         strncat(str, emp[i].zipCode, strlen(emp[i].zipCode));
          strncat(str, ",", 1);
-
-         strncpy(str, emp[i].department, strlen(emp[i].department));
-
+         strncat(str, emp[i].department, strlen(emp[i].department));
          strncat(str, ",", 1);
-
-         strncpy(str, emp[i].salary, strlen(emp[i].salary));
+         sprintf(salary, "%d", emp[i].salary);
+         strncat(str, salary, strlen(salary));
+         strncat(str, "\n", 1);
       }
    }
 
-   printf("%s", str);
+   printf("%s\n", str);
 
-   return str;
+   p = str;
+   return p;
 }
-*/
+
 /*
 int SearchByZipCode(struct Struct_Employee_Info employeeStructure, char zipCode[ZIPLIMIT]){
 
