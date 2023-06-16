@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-g -O1 -Wall
+CFLAGS=-g  -Wall
 LDLIBS=-lpthread
 
 all: client server 

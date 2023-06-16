@@ -19,87 +19,8 @@ void serverFunction(int connfd){
     bzero(buffer,MAXLINE);
     //n is the user input
     n = read(connfd, buffer, MAXLINE);
-    //make a choice based on user input
-    switch(n){
-        case 1:
-            //get first name
-            write(connfd,firstName,strlen(firstName));
-            bzero(buffer,MAXLINE);
-            n = read(connfd, buffer, MAXLINE);
-            /*Still need to add to csv file*/
-
-            //get last name
-            write(connfd,lastName,strlen(lastName));
-            bzero(buffer,MAXLINE);
-            n = read(connfd, buffer, MAXLINE);
-            /*Still need to add to csv file*/
-
-            //get zip code
-            write(connfd,zipCode,strlen(zipCode));
-            bzero(buffer,MAXLINE);
-            n = read(connfd, buffer, MAXLINE);
-            /*Still need to add to csv file*/
-
-            //get department
-            write(connfd,department,strlen(department));
-            bzero(buffer,MAXLINE);
-            n = read(connfd, buffer, MAXLINE);
-            /*Still need to add to csv file*/
-
-            //get salary
-            write(connfd,salary,strlen(salary));
-            bzero(buffer,MAXLINE);
-            n = read(connfd, buffer, MAXLINE);
-            /*Still need to add to csv file*/
-
-            //report success
-            write(connfd,successMessage,strlen(successMessage));
-            bzero(buffer,MAXLINE);
-            n = read(connfd, buffer, MAXLINE);
-
-            break;
-        case 2:
-            //get first name
-            write(connfd,firstName,strlen(firstName));
-            bzero(buffer,MAXLINE);
-            n = read(connfd, buffer, MAXLINE);
-            
-            //get last name
-            write(connfd,lastName,strlen(lastName));
-            bzero(buffer,MAXLINE);
-            n = read(connfd, buffer, MAXLINE);
-
-            /*Still need to search csv file*/
-            break;
-        case 3:
-            //get zip code
-            write(connfd,zipCode,strlen(zipCode));
-            bzero(buffer,MAXLINE);
-            n = read(connfd, buffer, MAXLINE);
-
-            /*Still need to search csv file*/
-            break;
-        case 4:
-            //get salary
-            write(connfd,salary,strlen(salary));
-            bzero(buffer,MAXLINE);
-            n = read(connfd, buffer, MAXLINE);
-            //get comparision type
-            write(connfd,comparisionType,strlen(comparisionType));
-            bzero(buffer,MAXLINE);
-            n = read(connfd, buffer, MAXLINE);
-
-            /*Still need to search csv file*/
-            break;
-        case 5:
-            //send message
-            write(connfd,connectionClosed,strlen(connectionClosed));
-            bzero(buffer,MAXLINE);
-            /*Still need to terminate server*/
-            break;
-        default:
-            break;
-    }
+    
+    
     //printf("server received %ld bytes message\n", n);
     //printf("Message from Client: %s\n",buffer);
     //write(connfd,successMessage,strlen(successMessage));
