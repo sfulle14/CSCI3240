@@ -3,7 +3,7 @@
 #include <stdbool.h>
 
 #define FILESIZE 1000
-#define MAXSTRUCT 100
+#define MAXSTRUCT 10
 #define NAMELIMIT 100
 #define ZIPLIMIT 6
 #define DEPTLIMIT 100
@@ -32,7 +32,9 @@ int main() {
    char* token;
    int count = 0;
    char comparisonOperator[2];
-   char* ch;
+   char* searchName;
+   char* searchZip;
+   char* searchSalary;
 
    struct Struct_Employee_Info emp[MAXSTRUCT];
 
@@ -46,22 +48,22 @@ int main() {
    }
 
    //SearchByName
-   ch = SearchByName(emp, "Pablo", "Picasso");
-   printf("%s\n", ch);
+   //searchName = SearchByName(emp, "Pablo", "Picasso");
+   //printf("%s\n", searchName);
 
    //SearchByZipCode
-   ch = SearchByZipCode(emp, "37128");
-   printf("%s\n", ch);
+   //searchZip = SearchByZipCode(emp, "37128");
+   //printf("%s\n", searchZip);
 
    //SearchBySalary
-   ch = SearchBySalary(emp, 50000, "==");
-   printf("%s\n", ch);
+   searchSalary = SearchBySalary(emp, 50000, "<");
+   printf("%s\n", searchSalary);
 
-   
+   //close file
    fclose(fp);
    return 0;
 }
-/*
+
 //Given a first and last name find all matching records
 char* SearchByName(struct Struct_Employee_Info emp[], char firstName[], char lastName[]){
    //function variables
@@ -92,7 +94,7 @@ char* SearchByName(struct Struct_Employee_Info emp[], char firstName[], char las
    p = str;
    return p;
 }
-*/
+
 
 //Given a zipCode find all records with that zipCode
 char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT]){
@@ -133,13 +135,121 @@ char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT])
 char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char comparisonOperator[2]){
    //function variables
    int count = 0;
-   static char strZip[FILESIZE];
-   static char* p2;
-   char salary[SALARYLIMIT];
+   static char strSal[FILESIZE];
+   static char* p3;
+   char strSalary[SALARYLIMIT];
 
-   //loop to compare all zipCodes to provided name
-   
+   //{“>”, “<”,”>=”, “<=”, “==”}
+   if(!strcmp(comparisonOperator, ">")){
+      for(int i=0; i<MAXSTRUCT; i++){
+         if(emp[i].salary > salary){
+            strncat(strSal, emp[i].firstName, strlen(emp[i].firstName));
+            strncat(strSal, ",", 1);
 
-   p2 = strZip;
-   return p2;
+            strncat(strSal, emp[i].lastName, strlen(emp[i].lastName));
+            strncat(strSal, ",", 1);
+
+            strncat(strSal, emp[i].zipCode, strlen(emp[i].zipCode));
+            strncat(strSal, ",", 1);
+
+            strncat(strSal, emp[i].department, strlen(emp[i].department));
+            strncat(strSal, ",", 1);
+
+            sprintf(strSalary, "%d", emp[i].salary);
+            strncat(strSal, strSalary, strlen(strSalary));
+            strncat(strSal, "\n", 1);
+         }
+      }
+   }
+   else if(!strcmp(comparisonOperator, "<")){
+      for(int i=0; i<MAXSTRUCT; i++){
+         if(emp[i].salary < salary){
+            strncat(strSal, emp[i].firstName, strlen(emp[i].firstName));
+            strncat(strSal, ",", 1);
+
+            strncat(strSal, emp[i].lastName, strlen(emp[i].lastName));
+            strncat(strSal, ",", 1);
+
+            strncat(strSal, emp[i].zipCode, strlen(emp[i].zipCode));
+            strncat(strSal, ",", 1);
+
+            strncat(strSal, emp[i].department, strlen(emp[i].department));
+            strncat(strSal, ",", 1);
+
+            sprintf(strSalary, "%d", emp[i].salary);
+            strncat(strSal, strSalary, strlen(strSalary));
+            strncat(strSal, "\n", 1);
+         }
+      }
+   }
+   else if(!strcmp(comparisonOperator, ">=")){
+      for(int i=0; i<MAXSTRUCT; i++){
+         if(emp[i].salary >= salary){
+            strncat(strSal, emp[i].firstName, strlen(emp[i].firstName));
+            strncat(strSal, ",", 1);
+
+            strncat(strSal, emp[i].lastName, strlen(emp[i].lastName));
+            strncat(strSal, ",", 1);
+
+            strncat(strSal, emp[i].zipCode, strlen(emp[i].zipCode));
+            strncat(strSal, ",", 1);
+
+            strncat(strSal, emp[i].department, strlen(emp[i].department));
+            strncat(strSal, ",", 1);
+
+            sprintf(strSalary, "%d", emp[i].salary);
+            strncat(strSal, strSalary, strlen(strSalary));
+            strncat(strSal, "\n", 1);
+         }
+      }
+   }
+   else if(!strcmp(comparisonOperator, "<=")){
+      for(int i=0; i<MAXSTRUCT; i++){
+         if(emp[i].salary <= salary){
+            strncat(strSal, emp[i].firstName, strlen(emp[i].firstName));
+            strncat(strSal, ",", 1);
+
+            strncat(strSal, emp[i].lastName, strlen(emp[i].lastName));
+            strncat(strSal, ",", 1);
+
+            strncat(strSal, emp[i].zipCode, strlen(emp[i].zipCode));
+            strncat(strSal, ",", 1);
+
+            strncat(strSal, emp[i].department, strlen(emp[i].department));
+            strncat(strSal, ",", 1);
+
+            sprintf(strSalary, "%d", emp[i].salary);
+            strncat(strSal, strSalary, strlen(strSalary));
+            strncat(strSal, "\n", 1);
+         }
+      }
+   }
+   else if(!strcmp(comparisonOperator, "==")){
+      for(int i=0; i<MAXSTRUCT; i++){
+         if(emp[i].salary == salary){
+            strncat(strSal, emp[i].firstName, strlen(emp[i].firstName));
+            strncat(strSal, ",", 1);
+
+            strncat(strSal, emp[i].lastName, strlen(emp[i].lastName));
+            strncat(strSal, ",", 1);
+
+            strncat(strSal, emp[i].zipCode, strlen(emp[i].zipCode));
+            strncat(strSal, ",", 1);
+
+            strncat(strSal, emp[i].department, strlen(emp[i].department));
+            strncat(strSal, ",", 1);
+
+            sprintf(strSalary, "%d", emp[i].salary);
+            strncat(strSal, strSalary, strlen(strSalary));
+            strncat(strSal, "\n", 1);
+         }
+      }
+   }
+   else{
+      printf("Not a valid Comparison Operator.");
+   }
+
+
+   p3 = strSal;
+   return p3;
 }
