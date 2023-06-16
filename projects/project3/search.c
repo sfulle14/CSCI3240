@@ -98,7 +98,7 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
    //{“>”, “<”,”>=”, “<=”, “==”}
    if(!strcmp(comparisonOperator, ">")){
       for(int i=0; i<MAXSTRUCT; i++){
-         if(emp[i].salary > salary){
+         if(emp[i].salary > salary && strcmp(emp[i].firstName, "")){
             strncat(strSal, emp[i].firstName, strlen(emp[i].firstName));
             strncat(strSal, ",", 1);
 
@@ -119,7 +119,7 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
    }
    else if(!strcmp(comparisonOperator, "<")){
       for(int i=0; i<MAXSTRUCT; i++){
-         if(emp[i].salary < salary && emp[i].salary >0){
+         if(emp[i].salary < salary && strcmp(emp[i].firstName, "")){
             strncat(strSal, emp[i].firstName, strlen(emp[i].firstName));
             strncat(strSal, ",", 1);
 
@@ -140,7 +140,7 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
    }
    else if(!strcmp(comparisonOperator, ">=")){
       for(int i=0; i<MAXSTRUCT; i++){
-         if(emp[i].salary >= salary){
+         if(emp[i].salary >= salary && strcmp(emp[i].firstName, "")){
             strncat(strSal, emp[i].firstName, strlen(emp[i].firstName));
             strncat(strSal, ",", 1);
 
@@ -161,7 +161,7 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
    }
    else if(!strcmp(comparisonOperator, "<=")){
       for(int i=0; i<MAXSTRUCT; i++){
-         if(emp[i].salary <= salary){
+         if(emp[i].salary <= salary && strcmp(emp[i].firstName, "")){
             strncat(strSal, emp[i].firstName, strlen(emp[i].firstName));
             strncat(strSal, ",", 1);
 
@@ -182,7 +182,7 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
    }
    else if(!strcmp(comparisonOperator, "==")){
       for(int i=0; i<MAXSTRUCT; i++){
-         if(emp[i].salary == salary){
+         if(emp[i].salary == salary && strcmp(emp[i].firstName, "")){
             strncat(strSal, emp[i].firstName, strlen(emp[i].firstName));
             strncat(strSal, ",", 1);
 
