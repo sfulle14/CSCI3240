@@ -3,7 +3,7 @@
 #include <stdbool.h>
 
 #define FILESIZE 1000
-#define MAXSTRUCT 4
+#define MAXSTRUCT 10
 #define NAMELIMIT 100
 #define ZIPLIMIT 6
 #define DEPTLIMIT 100
@@ -46,16 +46,22 @@ int main() {
       sscanf(buf, "%[^,],%[^,],%[^,],%[^,] ,%d ", emp[count].firstName, emp[count].lastName, emp[count].zipCode, emp[count].department, &emp[count].salary);
       count++;
    }
+   for(int i=count; i<MAXSTRUCT; i++){
+      strncpy(emp[i].firstName, "\0", 1);
+   }
 
    //SearchByName
+   printf("SearchByName: \n");
    searchName = SearchByName(emp, "Pablo", "Picasso");
    printf("%s\n", searchName);
 
    //SearchByZipCode
+   printf("SearchByZipCode: \n");
    searchZip = SearchByZipCode(emp, "37128");
    printf("%s\n", searchZip);
 
    //SearchBySalary
+   printf("SearchBySalary: \n");
    searchSalary = SearchBySalary(emp, 50000, "<");
    printf("%s\n", searchSalary);
 
@@ -144,7 +150,7 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
    //{“>”, “<”,”>=”, “<=”, “==”}
    if(!strcmp(comparisonOperator, ">")){
       for(int i=0; i<MAXSTRUCT; i++){
-         if(emp[i].salary > salary){
+         if(emp[i].salary > salary && strcmp(emp[i].firstName, "")){
             strncat(strSal, emp[i].firstName, strlen(emp[i].firstName));
             strncat(strSal, ",", 1);
 
@@ -165,7 +171,7 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
    }
    else if(!strcmp(comparisonOperator, "<")){
       for(int i=0; i<MAXSTRUCT; i++){
-         if(emp[i].salary < salary && emp[i].salary >0){
+         if(emp[i].salary < salary && strcmp(emp[i].firstName, "")){
             strncat(strSal, emp[i].firstName, strlen(emp[i].firstName));
             strncat(strSal, ",", 1);
 
@@ -186,7 +192,7 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
    }
    else if(!strcmp(comparisonOperator, ">=")){
       for(int i=0; i<MAXSTRUCT; i++){
-         if(emp[i].salary >= salary){
+         if(emp[i].salary >= salary && strcmp(emp[i].firstName, "")){
             strncat(strSal, emp[i].firstName, strlen(emp[i].firstName));
             strncat(strSal, ",", 1);
 
@@ -207,7 +213,7 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
    }
    else if(!strcmp(comparisonOperator, "<=")){
       for(int i=0; i<MAXSTRUCT; i++){
-         if(emp[i].salary <= salary){
+         if(emp[i].salary <= salary && strcmp(emp[i].firstName, "")){
             strncat(strSal, emp[i].firstName, strlen(emp[i].firstName));
             strncat(strSal, ",", 1);
 
@@ -228,7 +234,7 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
    }
    else if(!strcmp(comparisonOperator, "==")){
       for(int i=0; i<MAXSTRUCT; i++){
-         if(emp[i].salary == salary){
+         if(emp[i].salary == salary && strcmp(emp[i].firstName, "")){
             strncat(strSal, emp[i].firstName, strlen(emp[i].firstName));
             strncat(strSal, ",", 1);
 
