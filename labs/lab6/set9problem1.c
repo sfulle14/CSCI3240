@@ -48,12 +48,12 @@ int main() {
    }
 
    //SearchByName
-   //searchName = SearchByName(emp, "Pablo", "Picasso");
-   //printf("%s\n", searchName);
+   searchName = SearchByName(emp, "Pablo", "Picasso");
+   printf("%s\n", searchName);
 
    //SearchByZipCode
-   //searchZip = SearchByZipCode(emp, "37128");
-   //printf("%s\n", searchZip);
+   searchZip = SearchByZipCode(emp, "37128");
+   printf("%s\n", searchZip);
 
    //SearchBySalary
    searchSalary = SearchBySalary(emp, 50000, "<");
