@@ -21,8 +21,8 @@ struct Struct_Employee_Info{
 
 //function declaration
 char* SearchByName(struct Struct_Employee_Info emp[], char firstName[NAMELIMIT], char lastName[NAMELIMIT]);
-int SearchByZipCode(struct Struct_Employee_Info employeeStructure, char zipCode[ZIPLIMIT]);
-int SearchBySalary(struct Struct_Employee_Info employeeStructure, int salary, char comparisonOperator[2]);
+char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT]);
+char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char comparisonOperator[2]);
 
 int main() {
    //variable declaration
@@ -45,15 +45,24 @@ int main() {
       count++;
    }
 
+   //SearchByName
    ch = SearchByName(emp, "Pablo", "Picasso");
    printf("%s\n", ch);
 
+   //SearchByZipCode
+   ch = SearchByZipCode(emp, "37128");
+   printf("%s\n", ch);
+
+   //SearchBySalary
+   ch = SearchBySalary(emp, 50000, "==");
+   printf("%s\n", ch);
 
    
    fclose(fp);
    return 0;
 }
-
+/*
+//Given a first and last name find all matching records
 char* SearchByName(struct Struct_Employee_Info emp[], char firstName[], char lastName[]){
    //function variables
    int count = 0;
@@ -83,16 +92,54 @@ char* SearchByName(struct Struct_Employee_Info emp[], char firstName[], char las
    p = str;
    return p;
 }
-
-/*
-int SearchByZipCode(struct Struct_Employee_Info employeeStructure, char zipCode[ZIPLIMIT]){
-
-   return 0;
-}
-
-int SearchBySalary(struct Struct_Employee_Info employeeStructure, int salary, char comparisonOperator[2]){
-
-
-   return 0;
-}
 */
+
+//Given a zipCode find all records with that zipCode
+char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT]){
+   //function variables
+   int count = 0;
+   static char strZip[FILESIZE];
+   static char* p2;
+   char salary[SALARYLIMIT];
+
+   //loop to compare all zipCodes to provided name
+   for(int i=0; i<MAXSTRUCT; i++){
+      //if zipCodes are equal then add to a string var
+      //first,last,zip,department,salary
+      if(!strcmp(zipCode, emp[i].zipCode)){
+         strncat(strZip, emp[i].firstName, strlen(emp[i].firstName));
+         strncat(strZip, ",", 1);
+
+         strncat(strZip, emp[i].lastName, strlen(emp[i].lastName));
+         strncat(strZip, ",", 1);
+
+         strncat(strZip, emp[i].zipCode, strlen(emp[i].zipCode));
+         strncat(strZip, ",", 1);
+
+         strncat(strZip, emp[i].department, strlen(emp[i].department));
+         strncat(strZip, ",", 1);
+
+         sprintf(salary, "%d", emp[i].salary);
+         strncat(strZip, salary, strlen(salary));
+         strncat(strZip, "\n", 1);
+      }
+   }
+
+   p2 = strZip;
+   return p2;
+}
+
+//
+char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char comparisonOperator[2]){
+   //function variables
+   int count = 0;
+   static char strZip[FILESIZE];
+   static char* p2;
+   char salary[SALARYLIMIT];
+
+   //loop to compare all zipCodes to provided name
+   
+
+   p2 = strZip;
+   return p2;
+}
