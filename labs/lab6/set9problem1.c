@@ -3,7 +3,7 @@
 #include <stdbool.h>
 
 #define FILESIZE 1000
-#define MAXSTRUCT 10
+#define MAXSTRUCT 4
 #define NAMELIMIT 100
 #define ZIPLIMIT 6
 #define DEPTLIMIT 100
@@ -131,7 +131,7 @@ char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT])
    return p2;
 }
 
-//
+//given a salary and comparison operator return all records corresponding with those values
 char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char comparisonOperator[2]){
    //function variables
    int count = 0;
@@ -139,6 +139,8 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
    static char* p3;
    char strSalary[SALARYLIMIT];
 
+   //loop through all comparison operators
+   //then loop through all struct rows and compare their salary to provided salary
    //{“>”, “<”,”>=”, “<=”, “==”}
    if(!strcmp(comparisonOperator, ">")){
       for(int i=0; i<MAXSTRUCT; i++){
@@ -163,7 +165,7 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
    }
    else if(!strcmp(comparisonOperator, "<")){
       for(int i=0; i<MAXSTRUCT; i++){
-         if(emp[i].salary < salary){
+         if(emp[i].salary < salary && emp[i].salary >0){
             strncat(strSal, emp[i].firstName, strlen(emp[i].firstName));
             strncat(strSal, ",", 1);
 
