@@ -6,25 +6,19 @@
 void serverFunction(int connfd){
     char buffer[MAXLINE]; //MAXLINE = 8192 defined in csapp.h
     char successMessage[MAXLINE] = "Record added Sucessfully!!\n";
-    char firstName[MAXLINE] = "Enter First Name: ";
-    char lastName[MAXLINE] = "Enter Last Name: ";
-    char zipCode[MAXLINE] = "Enter Zip Code: ";
-    char department[MAXLINE] = "Enter Department: ";
-    char salary[MAXLINE] = "Enter Salary: ";
-    char comparisionType[MAXLINE] = "Enter Comparision Type ['>', '<', '==', '>=', '<=']: ";
     char connectionClosed[MAXLINE] = "Connection Closed!!";
     
     size_t n;
     //resetting the buffer
     bzero(buffer,MAXLINE);
     //n is the user input
-    n = read(connfd, buffer, MAXLINE);
+    while((n= read(connfd, buffer, MAXLINE)) != 0){
+        printf("server received %ld bytes message\n", n);
+        printf("Message from Client: %s\n",buffer);
+        write(connfd,successMessage,strlen(successMessage));
+        bzero(buffer,MAXLINE);
+    }
     
-    
-    //printf("server received %ld bytes message\n", n);
-    //printf("Message from Client: %s\n",buffer);
-    //write(connfd,successMessage,strlen(successMessage));
-
     return; 
 }
 
