@@ -86,6 +86,7 @@ int main(int argc, char *argv[])
                 break;
             //Search for records by name
             case 2:
+                bzero(buffer,MAXLINE);
                 printf("Enter first name: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
@@ -96,7 +97,6 @@ int main(int argc, char *argv[])
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
                 strncat(buffer, str, strlen(str));
-                strncat(buffer, ",", 1);
 
                 //sending the message received from the user to the server
                 write(clientfd,buffer,strlen(buffer));
@@ -105,15 +105,18 @@ int main(int argc, char *argv[])
                 
                 //get return message from server that new record was added
                 read(clientfd,buffer,MAXLINE);
+                printf("Message from Server:\n");
+                //displaying the message in buffer on the console
+                Fputs(buffer,stdout);
                 break;
             //search for records by Zip Code
             case 3:
+                bzero(buffer,MAXLINE);
                 printf("Enter Zip Code: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
                 strncat(buffer, str, strlen(str));
-                strncat(buffer, ",", 1);
-
+                
                 //sending the message received from the user to the server
                 write(clientfd,buffer,strlen(buffer));
                 bzero(buffer,MAXLINE);
@@ -121,10 +124,20 @@ int main(int argc, char *argv[])
                 
                 //get return message from server that new record was added
                 read(clientfd,buffer,MAXLINE);
+                printf("Message from Server:\n");
+                //displaying the message in buffer on the console
+                Fputs(buffer,stdout);
                 break;
             //Search for records comparing salary
             case 4:
+                bzero(buffer,MAXLINE);
                 printf("Enter Salary: ");
+                bzero(str,MAXLINE);
+                Fgets(str,MAXLINE,stdin);
+                strncat(buffer, str, strlen(str));
+                strncat(buffer, ",", 1);
+
+                printf("Enter Comparision Type [’>’,’<’,’==’,’>=’,’<=’]: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
                 strncat(buffer, str, strlen(str));
@@ -136,6 +149,9 @@ int main(int argc, char *argv[])
                 
                 //get return message from server that new record was added
                 read(clientfd,buffer,MAXLINE);
+                printf("Message from Server:\n");
+                //displaying the message in buffer on the console
+                Fputs(buffer,stdout);
                 break;
             //Terminate connection
             case 5:
