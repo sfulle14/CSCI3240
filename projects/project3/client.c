@@ -36,8 +36,12 @@ int main(int argc, char *argv[])
         printf("Select an option [1,2,3,4, or 5]: ");
 
         //get choice from user
-        Fgets(str, MAXLINE, stdin);
-        choice = atoi(str);
+        Fgets(buffer, MAXLINE, stdin);
+        choice = atoi(buffer);
+
+        //need to send choice to server so it knows what to do
+        write(clientfd,buffer,strlen(buffer));
+        read(clientfd,buffer,MAXLINE);
 
         //make a choice based on user input
         switch(choice){
@@ -47,31 +51,31 @@ int main(int argc, char *argv[])
                 bzero(buffer,MAXLINE);
                 printf("Enter first name: ");   
                 Fgets(str,MAXLINE,stdin);
-                strncpy(buffer, str, strlen(str));
+                strncpy(buffer, str, strlen(str)-1);
                 strncat(buffer, ",", 1);
 
                 bzero(str,MAXLINE);
                 printf("Enter last name: ");           
                 Fgets(str,MAXLINE,stdin);
-                strncat(buffer, str, strlen(str));
+                strncat(buffer, str, strlen(str)-1);
                 strncat(buffer, ",", 1);
 
                 printf("Enter Zip Code: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
-                strncat(buffer, str, strlen(str));
+                strncat(buffer, str, strlen(str)-1);
                 strncat(buffer, ",", 1);
 
                 printf("Enter Department: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
-                strncat(buffer, str, strlen(str));
+                strncat(buffer, str, strlen(str)-1);
                 strncat(buffer, ",", 1);
 
                 printf("Enter Salary: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
-                strncat(buffer, str, strlen(str));
+                strncat(buffer, str, strlen(str)-1);
 
                 //sending the message received from the user to the server
                 write(clientfd,buffer,strlen(buffer));
@@ -90,13 +94,13 @@ int main(int argc, char *argv[])
                 printf("Enter first name: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
-                strncpy(buffer, str, strlen(str));
+                strncpy(buffer, str, strlen(str)-1);
                 strncat(buffer, ",", 1);
 
                 printf("Enter last name: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
-                strncat(buffer, str, strlen(str));
+                strncat(buffer, str, strlen(str)-1);
 
                 //sending the message received from the user to the server
                 write(clientfd,buffer,strlen(buffer));
@@ -115,6 +119,7 @@ int main(int argc, char *argv[])
                 printf("Enter Zip Code: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
+                str[strlen(str)-1] = "\0";
                 strncat(buffer, str, strlen(str));
                 
                 //sending the message received from the user to the server
@@ -134,12 +139,14 @@ int main(int argc, char *argv[])
                 printf("Enter Salary: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
+                str[strlen(str)-1] = "\0";
                 strncat(buffer, str, strlen(str));
                 strncat(buffer, ",", 1);
 
                 printf("Enter Comparision Type [’>’,’<’,’==’,’>=’,’<=’]: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
+                str[strlen(str)-1] = "\0";
                 strncat(buffer, str, strlen(str));
 
                 //sending the message received from the user to the server

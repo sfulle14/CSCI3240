@@ -17,23 +17,33 @@ struct Struct_Employee_Info{
    int salary;
 };
 
+//function declaration
+char* SearchByName(struct Struct_Employee_Info emp[], char Name[NAMELIMIT]);
+char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT]);
+char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char comparisonOperator[2]);
+
+
 
 //Given a first and last name find all matching records
-char* SearchByName(struct Struct_Employee_Info emp[], char firstName[], char lastName[]){
+char* SearchByName(struct Struct_Employee_Info emp[], char Name[]){
    //function variables
    int count = 0;
    static char str[FILESIZE];
    static char* p;
    char salary[SALARYLIMIT];
+   char firstLast[NAMELIMIT*2];
 
    //loop to compare all names to provided name
    for(int i=0; i<MAXSTRUCT; i++){
+      strncpy(firstLast, emp[i].firstName,strlen(emp[i].firstName));
+      strncat(firstLast, ",", 1);
+      strncat(firstLast, emp[i].lastName, strlen(emp[i].lastName));
       //if names are equal then add to a string var
       //first,last,zip,department,salary
-      if(!strcmp(firstName, emp[i].firstName) && !strcmp(lastName, emp[i].lastName)){
-         strncat(str, firstName, strlen(firstName));
+      if(!strcmp(Name, firstLast)){
+         strncat(str, emp[i].firstName, strlen(emp[i].firstName));
          strncat(str, ",", 1);
-         strncat(str, lastName, strlen(lastName));
+         strncat(str, emp[i].lastName, strlen(emp[i].lastName));
          strncat(str, ",", 1);
          strncat(str, emp[i].zipCode, strlen(emp[i].zipCode));
          strncat(str, ",", 1);
