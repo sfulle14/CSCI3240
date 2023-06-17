@@ -14,6 +14,9 @@ int main(int argc, char *argv[])
     host = argv[1];
     port = argv[2];
     clientfd = Open_clientfd(host, port);
+    
+    rio_t rio;
+    
     //getting a message from the user
     printf("Please enter the message: ");
     //resetting the buffer
@@ -29,7 +32,7 @@ int main(int argc, char *argv[])
     printf("Message from Server:");
     //displaying the message in buffer on the console
     Fputs(buffer,stdout);
-    
+
     /*TODO
         1. Add a code to send new messages to the server
            (you can ask the user to provide a new message in the terminal)
@@ -43,12 +46,15 @@ int main(int argc, char *argv[])
     Fgets(buffer,MAXLINE,stdin);
     //sending the message received from the user to the server
     write(clientfd,buffer,strlen(buffer));
+    bzero(buffer,MAXLINE);
     //waiting for the message from the server.
     //the message will be stored in buffer variable.
-    Rio_readlineb(clientfd,buffer,MAXLINE);
+    Rio_readlineb(&rio,buffer,MAXLINE);
     printf("Message from Server:");
     //displaying the message in buffer on the console
     Fputs(buffer,stdout);
+    //read(clientfd,buffer,MAXLINE);
+    
 
     Close(clientfd);
     return 0;
