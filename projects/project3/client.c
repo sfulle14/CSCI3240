@@ -80,7 +80,11 @@ int main(int argc, char *argv[])
                 
                 //get return message from server that new record was added
                 read(clientfd,buffer,MAXLINE);
+                printf("Message from Server:\n");
+                //displaying the message in buffer on the console
+                Fputs(buffer,stdout);
                 break;
+            //Search for records by name
             case 2:
                 printf("Enter first name: ");
                 bzero(str,MAXLINE);
@@ -102,6 +106,7 @@ int main(int argc, char *argv[])
                 //get return message from server that new record was added
                 read(clientfd,buffer,MAXLINE);
                 break;
+            //search for records by Zip Code
             case 3:
                 printf("Enter Zip Code: ");
                 bzero(str,MAXLINE);
@@ -117,6 +122,7 @@ int main(int argc, char *argv[])
                 //get return message from server that new record was added
                 read(clientfd,buffer,MAXLINE);
                 break;
+            //Search for records comparing salary
             case 4:
                 printf("Enter Salary: ");
                 bzero(str,MAXLINE);
@@ -131,10 +137,12 @@ int main(int argc, char *argv[])
                 //get return message from server that new record was added
                 read(clientfd,buffer,MAXLINE);
                 break;
+            //Terminate connection
             case 5:
                 Close(clientfd);
                 exit(0);
                 break;
+            //choice was not valid
             default:
                 printf("Invalid choice!\n");
                 break;
