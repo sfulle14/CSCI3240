@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
                 Fgets(str,MAXLINE,stdin);
                 strncat(buffer, str, strlen(str)-1);
                 strncat(buffer, ",", 1);
-
+ 
                 printf("Enter Department: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
