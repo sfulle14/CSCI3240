@@ -2,6 +2,7 @@
 void serverFunction(int connfd){
    char buffer[MAXLINE]; //MAXLINE = 8192 defined in csapp.h
    char successMessage[MAXLINE] = "I got your message\n";
+   char secoundMessage[MAXLINE] = "I have received your second message";
    //TODO:
    //Add second message here
    //TODO End
@@ -16,7 +17,13 @@ void serverFunction(int connfd){
        1. Add a code to receive new messages from the client
        2. Send the message "I have received your second message" to the client
    */
-   return; }
+   bzero(buffer,MAXLINE);
+   n = read(connfd, buffer, MAXLINE);
+   write(connfd,secoundMessage,strlen(secoundMessage));
+
+   return; 
+}
+
 int main(int argc, char *argv[])
 {
    int listenfd;

@@ -29,12 +29,27 @@ int main(int argc, char *argv[])
     printf("Message from Server:");
     //displaying the message in buffer on the console
     Fputs(buffer,stdout);
+    
     /*TODO
         1. Add a code to send new messages to the server
            (you can ask the user to provide a new message in the terminal)
         2. Wait for the confirmation message (using Rio_readlineb function)
              from the server and display it.
     */
+    printf("Enter a 2nd message: ");
+    //resetting the buffer
+    bzero(buffer,MAXLINE);
+    //getting the message from the user
+    Fgets(buffer,MAXLINE,stdin);
+    //sending the message received from the user to the server
+    write(clientfd,buffer,strlen(buffer));
+    //waiting for the message from the server.
+    //the message will be stored in buffer variable.
+    Rio_readlineb(clientfd,buffer,MAXLINE);
+    printf("Message from Server:");
+    //displaying the message in buffer on the console
+    Fputs(buffer,stdout);
+
     Close(clientfd);
     return 0;
 }
