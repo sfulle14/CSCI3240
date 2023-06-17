@@ -34,7 +34,9 @@ void serverFunction(int connfd){
     char* filename = "records.csv";
     char buf[FILESIZE];
     int count = 0;
-    char* cptr;
+    char* searchName;
+    char* searchZip;
+    char* searchSalary;
     struct Struct_Employee_Info emp[MAXSTRUCT];
     
     //open file
@@ -67,26 +69,42 @@ void serverFunction(int connfd){
                 bzero(buffer,MAXLINE);
                 break;
             case 2:
+                //get input from client
                 n= read(connfd, buffer, MAXLINE);
                 printf("server received %ld bytes message\n", n);
                 printf("Message from Client: %s\n",buffer);
-                cptr = SearchByName(emp,buffer);
                 
-                write(connfd,cptr,strlen(cptr));
+                //search database(csv)
+                searchName = SearchByName(emp, buffer);
+                
+                //return search to client
+                write(connfd,searchName,strlen(searchName));
                 bzero(buffer,MAXLINE);
                 break;
             case 3:
+                //get input from client
                 n= read(connfd, buffer, MAXLINE);
                 printf("server received %ld bytes message\n", n);
                 printf("Message from Client: %s\n",buffer);
-                write(connfd,successMessage,strlen(successMessage));
+                
+                //search database(csv)
+                searchZip = SearchByZipCode(emp, buffer);
+                
+                //return search to client
+                write(connfd,searchZip,strlen(searchZip));
                 bzero(buffer,MAXLINE);
                 break;
             case 4:
+                //get input from client
                 n= read(connfd, buffer, MAXLINE);
                 printf("server received %ld bytes message\n", n);
                 printf("Message from Client: %s\n",buffer);
-                write(connfd,successMessage,strlen(successMessage));
+                
+                //search database(csv)
+                searchSalary = SearchBySalary(emp, buffer);
+                
+                //return search to client
+                write(connfd,searchSalary,strlen(searchSalary));
                 bzero(buffer,MAXLINE);
                 break;
             case 5:

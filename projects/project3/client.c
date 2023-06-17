@@ -119,8 +119,7 @@ int main(int argc, char *argv[])
                 printf("Enter Zip Code: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
-                str[strlen(str)-1] = "\0";
-                strncat(buffer, str, strlen(str));
+                strncat(buffer, str, strlen(str)-1);
                 
                 //sending the message received from the user to the server
                 write(clientfd,buffer,strlen(buffer));
