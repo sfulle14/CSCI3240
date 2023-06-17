@@ -37,6 +37,7 @@ void serverFunction(int connfd){
     char* searchName;
     char* searchZip;
     char* searchSalary;
+    int salary;
     struct Struct_Employee_Info emp[MAXSTRUCT];
     
     //open file
@@ -134,7 +135,7 @@ void serverFunction(int connfd){
                 break;
         }
     }
-    
+    fclose(fp);
     return; 
 }
 

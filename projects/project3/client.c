@@ -150,7 +150,7 @@ int main(int argc, char *argv[])
                 printf("Enter Comparision Type [’>’,’<’,’==’,’>=’,’<=’]: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
-                strncat(buffer, str, strlen(str));     
+                strncat(buffer, str, strlen(str)-1);     
 
                 //send comparision type
                 //sending the message received from the user to the server
