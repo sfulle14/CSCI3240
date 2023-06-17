@@ -140,7 +140,12 @@ int main(int argc, char *argv[])
                 Fgets(str,MAXLINE,stdin);
                 str[strlen(str)-1] = "\0";
                 strncat(buffer, str, strlen(str));
-                strncat(buffer, ",", 1);
+
+                //send amount
+                //sending the message received from the user to the server
+                write(clientfd,buffer,strlen(buffer));
+                bzero(buffer,MAXLINE);
+                bzero(str,MAXLINE);
 
                 printf("Enter Comparision Type [’>’,’<’,’==’,’>=’,’<=’]: ");
                 bzero(str,MAXLINE);
@@ -148,6 +153,7 @@ int main(int argc, char *argv[])
                 str[strlen(str)-1] = "\0";
                 strncat(buffer, str, strlen(str));
 
+                //send comparision type
                 //sending the message received from the user to the server
                 write(clientfd,buffer,strlen(buffer));
                 bzero(buffer,MAXLINE);
