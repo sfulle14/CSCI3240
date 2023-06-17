@@ -138,20 +138,19 @@ int main(int argc, char *argv[])
                 printf("Enter Salary: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
-                str[strlen(str)-1] = "\0";
-                strncat(buffer, str, strlen(str));
+                strncat(buffer, str, strlen(str)-1);
 
                 //send amount
                 //sending the message received from the user to the server
                 write(clientfd,buffer,strlen(buffer));
+                read(clientfd,buffer,MAXLINE);
                 bzero(buffer,MAXLINE);
-                bzero(str,MAXLINE);
-
+                bzero(str,MAXLINE);   
+                
                 printf("Enter Comparision Type [’>’,’<’,’==’,’>=’,’<=’]: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
-                str[strlen(str)-1] = "\0";
-                strncat(buffer, str, strlen(str));
+                strncat(buffer, str, strlen(str));     
 
                 //send comparision type
                 //sending the message received from the user to the server

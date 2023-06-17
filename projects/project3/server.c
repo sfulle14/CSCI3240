@@ -37,7 +37,6 @@ void serverFunction(int connfd){
     char* searchName;
     char* searchZip;
     char* searchSalary;
-    int salary;
     struct Struct_Employee_Info emp[MAXSTRUCT];
     
     //open file
@@ -60,7 +59,6 @@ void serverFunction(int connfd){
     while((n= read(connfd, buffer, MAXLINE)) != 0){
         write(connfd,buffer,strlen(buffer));
         choice = atoi(buffer);
-        bzero(buffer,MAXLINE);
         switch(choice){
             case 1:
                 bzero(buffer,MAXLINE);
@@ -109,9 +107,12 @@ void serverFunction(int connfd){
                 printf("Message from Client: %s\n",buffer);
                 salary = atoi(buffer);
                 write(connfd,buffer,strlen(buffer));
+                bzero(buffer,MAXLINE);
 
                 //get comparison type
                 n= read(connfd, buffer, MAXLINE);
+                printf("server received %ld bytes message\n", n);
+                printf("Message from Client: %s\n",buffer);
 
                 
                 //search database(csv)
@@ -122,6 +123,7 @@ void serverFunction(int connfd){
                 bzero(buffer,MAXLINE);
                 break;
             case 5:
+                bzero(buffer,MAXLINE);
                 n= read(connfd, buffer, MAXLINE);
                 printf("Message from Client: %s\n",buffer);
                 write(connfd,connectionClosed,strlen(connectionClosed));
@@ -178,10 +180,13 @@ char* SearchByName(struct Struct_Employee_Info emp[], char Name[]){
    static char* p;
    char salary[SALARYLIMIT];
    char firstLast[NAMELIMIT*2];
+    
+   strcpy(str, "");
+   strcpy(firstLast, "");
 
    //loop to compare all names to provided name
    for(int i=0; i<MAXSTRUCT; i++){
-      strncpy(firstLast, emp[i].firstName,strlen(emp[i].firstName));
+      strncat(firstLast, emp[i].firstName,strlen(emp[i].firstName));
       strncat(firstLast, ",", 1);
       strncat(firstLast, emp[i].lastName, strlen(emp[i].lastName));
       //if names are equal then add to a string var
@@ -213,6 +218,8 @@ char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT])
    static char strZip[FILESIZE];
    static char* p2;
    char salary[SALARYLIMIT];
+    
+   strcpy(strZip,"");
 
    //loop to compare all zipCodes to provided name
    for(int i=0; i<MAXSTRUCT; i++){
@@ -242,7 +249,6 @@ char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT])
 }
 
 
-
 //given a salary and comparison operator return all records corresponding with those values
 char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char comparisonOperator[2]){
    //function variables
@@ -250,6 +256,12 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
    static char strSal[FILESIZE];
    static char* p3;
    char strSalary[SALARYLIMIT];
+   //int salary; 
+   //char comparisonOperator[2];
+
+   //sscanf(input, "%d,%s", &salary, comparisonOperator);
+    
+   strcpy(strSal, "");
 
    //loop through all comparison operators
    //then loop through all struct rows and compare their salary to provided salary
@@ -360,11 +372,10 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
       }
    }
    else{
-      printf("Not a valid Comparison Operator.");
+      printf("%s is not a valid Comparison Operator.", comparisonOperator);
    }
 
 
    p3 = strSal;
    return p3;
 }
-
