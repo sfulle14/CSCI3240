@@ -187,7 +187,8 @@ char* SearchByName(struct Struct_Employee_Info emp[], char Name[]){
 
    //loop to compare all names to provided name
    for(int i=0; i<MAXSTRUCT; i++){
-      strncat(firstLast, emp[i].firstName,strlen(emp[i].firstName));
+      strcpy(firstLast, "");
+      strncpy(firstLast, emp[i].firstName,strlen(emp[i].firstName));
       strncat(firstLast, ",", 1);
       strncat(firstLast, emp[i].lastName, strlen(emp[i].lastName));
       //if names are equal then add to a string var
@@ -195,12 +196,16 @@ char* SearchByName(struct Struct_Employee_Info emp[], char Name[]){
       if(!strcmp(Name, firstLast)){
          strncat(str, emp[i].firstName, strlen(emp[i].firstName));
          strncat(str, ",", 1);
+
          strncat(str, emp[i].lastName, strlen(emp[i].lastName));
          strncat(str, ",", 1);
+
          strncat(str, emp[i].zipCode, strlen(emp[i].zipCode));
          strncat(str, ",", 1);
+
          strncat(str, emp[i].department, strlen(emp[i].department));
          strncat(str, ",", 1);
+
          sprintf(salary, "%d", emp[i].salary);
          strncat(str, salary, strlen(salary));
          strncat(str, "\n", 1);
