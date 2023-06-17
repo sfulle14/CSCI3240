@@ -20,7 +20,7 @@ struct Struct_Employee_Info{
 //function declaration
 char* SearchByName(struct Struct_Employee_Info emp[], char Name[NAMELIMIT]);
 char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT]);
-char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char comparisonOperator[2]);
+char* SearchBySalary(struct Struct_Employee_Info emp[], char input[SALARYLIMIT]);
 
 
 
@@ -33,9 +33,12 @@ char* SearchByName(struct Struct_Employee_Info emp[], char Name[]){
    char salary[SALARYLIMIT];
    char firstLast[NAMELIMIT*2];
 
+   strcpy(str, "");
+   strcpy(firstLast, "");
+
    //loop to compare all names to provided name
    for(int i=0; i<MAXSTRUCT; i++){
-      strncpy(firstLast, emp[i].firstName,strlen(emp[i].firstName));
+      strncat(firstLast, emp[i].firstName,strlen(emp[i].firstName));
       strncat(firstLast, ",", 1);
       strncat(firstLast, emp[i].lastName, strlen(emp[i].lastName));
       //if names are equal then add to a string var
@@ -68,6 +71,8 @@ char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT])
    static char* p2;
    char salary[SALARYLIMIT];
 
+   strcpy(strZip,"");
+
    //loop to compare all zipCodes to provided name
    for(int i=0; i<MAXSTRUCT; i++){
       //if zipCodes are equal then add to a string var
@@ -96,12 +101,18 @@ char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT])
 }
 
 //given a salary and comparison operator return all records corresponding with those values
-char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char comparisonOperator[2]){
+char* SearchBySalary(struct Struct_Employee_Info emp[], char input[SALARYLIMIT]){
    //function variables
    int count = 0;
    static char strSal[FILESIZE];
    static char* p3;
    char strSalary[SALARYLIMIT];
+   int salary; 
+   char comparisonOperator[2];
+
+   sscanf(input, "%d,%[^,]", salary, comparisonOperator);
+
+   strcpy(strSal, "");
 
    //loop through all comparison operators
    //then loop through all struct rows and compare their salary to provided salary

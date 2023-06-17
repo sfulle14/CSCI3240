@@ -37,6 +37,7 @@ void serverFunction(int connfd){
     char* searchName;
     char* searchZip;
     char* searchSalary;
+    int salary;
     struct Struct_Employee_Info emp[MAXSTRUCT];
     
     //open file
@@ -62,13 +63,18 @@ void serverFunction(int connfd){
         bzero(buffer,MAXLINE);
         switch(choice){
             case 1:
+                bzero(buffer,MAXLINE);
                 n= read(connfd, buffer, MAXLINE);
                 printf("server received %ld bytes message\n", n);
                 printf("Message from Client: %s\n",buffer);
+
+                fprintf(fp,"%s", buffer);
+
                 write(connfd,successMessage,strlen(successMessage));
                 bzero(buffer,MAXLINE);
                 break;
             case 2:
+                bzero(buffer,MAXLINE);
                 //get input from client
                 n= read(connfd, buffer, MAXLINE);
                 printf("server received %ld bytes message\n", n);
@@ -82,6 +88,7 @@ void serverFunction(int connfd){
                 bzero(buffer,MAXLINE);
                 break;
             case 3:
+                bzero(buffer,MAXLINE);
                 //get input from client
                 n= read(connfd, buffer, MAXLINE);
                 printf("server received %ld bytes message\n", n);
@@ -95,13 +102,20 @@ void serverFunction(int connfd){
                 bzero(buffer,MAXLINE);
                 break;
             case 4:
-                //get input from client
+                bzero(buffer,MAXLINE);
+                //get salary from client
                 n= read(connfd, buffer, MAXLINE);
                 printf("server received %ld bytes message\n", n);
                 printf("Message from Client: %s\n",buffer);
+                salary = atoi(buffer);
+                write(connfd,buffer,strlen(buffer));
+
+                //get comparison type
+                n= read(connfd, buffer, MAXLINE);
+
                 
                 //search database(csv)
-                searchSalary = SearchBySalary(emp, buffer);
+                searchSalary = SearchBySalary(emp, salary, buffer);
                 
                 //return search to client
                 write(connfd,searchSalary,strlen(searchSalary));
@@ -226,6 +240,8 @@ char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT])
    p2 = strZip;
    return p2;
 }
+
+
 
 //given a salary and comparison operator return all records corresponding with those values
 char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char comparisonOperator[2]){
