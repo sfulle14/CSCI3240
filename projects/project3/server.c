@@ -165,9 +165,8 @@ int main(int argc, char *argv[])
 
 
 //Given a first and last name find all matching records
-char* SearchByName(struct Struct_Employee_Info emp[], char Name[]){
+char* SearchByName(struct Struct_Employee_Info emp[], char Name[NAMELIMIT]){
    //function variables
-   int count = 0;
    static char str[FILESIZE]="\0";
    static char* p;
    char salary[SALARYLIMIT];
@@ -211,7 +210,6 @@ char* SearchByName(struct Struct_Employee_Info emp[], char Name[]){
 //Given a zipCode find all records with that zipCode
 char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT]){
    //function variables
-   int count = 0;
    static char strZip[FILESIZE];
    static char* p2;
    char salary[SALARYLIMIT];
@@ -253,7 +251,6 @@ char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT])
 //given a salary and comparison operator return all records corresponding with those values
 char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char comparisonOperator[2]){
    //function variables
-   int count = 0;
    static char strSal[FILESIZE];
    static char* p3;
    char strSalary[SALARYLIMIT];
