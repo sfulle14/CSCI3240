@@ -2,7 +2,7 @@
 
 #include "csapp.h"
 
-
+//define constants
 #define FILESIZE 1000
 #define MAXSTRUCT 10
 #define NAMELIMIT 100
@@ -198,6 +198,7 @@ char* SearchByName(struct Struct_Employee_Info emp[], char Name[NAMELIMIT]){
          strncat(str, "\n", 1);
       }
    }
+   //if string is empty return noRecord message
    if(strlen(str)==0){
       strncpy(str,noRecord,strlen(noRecord));
    }
@@ -239,6 +240,7 @@ char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT])
          strncat(strZip, "\n", 1);
       }
    }
+   //if string is empty return noRecord message
    if(strlen(strZip)==0){
       strncpy(strZip,noRecord,strlen(noRecord));
    }
@@ -366,6 +368,7 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
          }
       }
    }
+   //if string is empty return noRecord message
    if(strlen(strSal)==0){
       strncpy(strSal,noRecord,strlen(noRecord));
    }
