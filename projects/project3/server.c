@@ -70,7 +70,8 @@ void serverFunction(int connfd){
                 sscanf(buffer, "%[^,],%[^,],%[^,],%[^,] ,%d ", emp[count].firstName, emp[count].lastName, emp[count].zipCode, emp[count].department, &emp[count].salary);
                 count++;
 
-                fprintf(fp, "%s", buffer);
+                //fprintf(fp, "%s\n", buffer);
+                fputs(buffer,fp);
 
                 write(connfd,successMessage,strlen(successMessage));
                 bzero(buffer,MAXLINE);
