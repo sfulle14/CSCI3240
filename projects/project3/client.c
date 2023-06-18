@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
                 Fgets(str,MAXLINE,stdin);
                 strncpy(buffer, str, strlen(str)-1);
                 strncat(buffer, ",", 1);
-
+                
                 bzero(str,MAXLINE);
                 printf("Enter last name: ");           
                 Fgets(str,MAXLINE,stdin);

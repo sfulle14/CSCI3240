@@ -41,7 +41,7 @@ void serverFunction(int connfd){
     struct Struct_Employee_Info emp[MAXSTRUCT];
     
     //open file
-   fp = fopen(filename, "r+");
+   fp = fopen(filename, "a+");
 
    //read in the csv into the struct
    while(fgets(buf, FILESIZE, fp) != NULL){
@@ -67,7 +67,10 @@ void serverFunction(int connfd){
                 printf("server received %ld bytes message\n", n);
                 printf("Message from Client: %s\n",buffer);
 
-                fprintf(fp,"%s", buffer);
+                sscanf(buffer, "%[^,],%[^,],%[^,],%[^,] ,%d ", emp[count].firstName, emp[count].lastName, emp[count].zipCode, emp[count].department, &emp[count].salary);
+                count++;
+
+                fprintf(fp, "%s", buffer);
 
                 write(connfd,successMessage,strlen(successMessage));
                 bzero(buffer,MAXLINE);
