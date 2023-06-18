@@ -64,14 +64,12 @@ void serverFunction(int connfd){
             case 1:
                 bzero(buffer,MAXLINE);
                 n= read(connfd, buffer, MAXLINE);
-                printf("server received %ld bytes message\n", n);
-                printf("Message from Client: %s\n",buffer);
 
                 sscanf(buffer, "%[^,],%[^,],%[^,],%[^,] ,%d ", emp[count].firstName, emp[count].lastName, emp[count].zipCode, emp[count].department, &emp[count].salary);
                 count++;
 
-                //fprintf(fp, "%s\n", buffer);
-                fputs(buffer,fp);
+                fprintf(fp, "%s","\n");
+                fprintf(fp, "%s", buffer);
 
                 write(connfd,successMessage,strlen(successMessage));
                 bzero(buffer,MAXLINE);
@@ -80,8 +78,6 @@ void serverFunction(int connfd){
                 bzero(buffer,MAXLINE);
                 //get input from client
                 n= read(connfd, buffer, MAXLINE);
-                printf("server received %ld bytes message\n", n);
-                printf("Message from Client: %s\n",buffer);
                 
                 //search database(csv)
                 searchName = SearchByName(emp, buffer);
@@ -94,8 +90,6 @@ void serverFunction(int connfd){
                 bzero(buffer,MAXLINE);
                 //get input from client
                 n= read(connfd, buffer, MAXLINE);
-                printf("server received %ld bytes message\n", n);
-                printf("Message from Client: %s\n",buffer);
                 
                 //search database(csv)
                 searchZip = SearchByZipCode(emp, buffer);
@@ -108,17 +102,12 @@ void serverFunction(int connfd){
                 bzero(buffer,MAXLINE);
                 //get salary from client
                 n= read(connfd, buffer, MAXLINE);
-                printf("server received %ld bytes message\n", n);
-                printf("Message from Client: %s\n",buffer);
                 salary = atoi(buffer);
                 write(connfd,buffer,strlen(buffer));
                 bzero(buffer,MAXLINE);
 
                 //get comparison type
                 n= read(connfd, buffer, MAXLINE);
-                printf("server received %ld bytes message\n", n);
-                printf("Message from Client: %s\n",buffer);
-
                 
                 //search database(csv)
                 searchSalary = SearchBySalary(emp, salary, buffer);
@@ -192,7 +181,7 @@ char* SearchByName(struct Struct_Employee_Info emp[], char Name[]){
    //loop to compare all names to provided name
    for(int i=0; i<MAXSTRUCT; i++){
       strcpy(firstLast, "");
-      strncpy(firstLast, emp[i].firstName,strlen(emp[i].firstName));
+      strncat(firstLast, emp[i].firstName,strlen(emp[i].firstName));
       strncat(firstLast, ",", 1);
       strncat(firstLast, emp[i].lastName, strlen(emp[i].lastName));
       //if names are equal then add to a string var
@@ -200,16 +189,12 @@ char* SearchByName(struct Struct_Employee_Info emp[], char Name[]){
       if(!strcmp(Name, firstLast)){
          strncat(str, emp[i].firstName, strlen(emp[i].firstName));
          strncat(str, ",", 1);
-
          strncat(str, emp[i].lastName, strlen(emp[i].lastName));
          strncat(str, ",", 1);
-
          strncat(str, emp[i].zipCode, strlen(emp[i].zipCode));
          strncat(str, ",", 1);
-
          strncat(str, emp[i].department, strlen(emp[i].department));
          strncat(str, ",", 1);
-
          sprintf(salary, "%d", emp[i].salary);
          strncat(str, salary, strlen(salary));
          strncat(str, "\n", 1);
