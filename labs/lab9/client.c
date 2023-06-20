@@ -47,8 +47,10 @@ int main(int argc, char *argv[])
     //sending the message received from the user to the server
     write(clientfd,buffer,strlen(buffer));
     bzero(buffer,MAXLINE);
+
     //waiting for the message from the server.
     //the message will be stored in buffer variable.
+    Rio_readinitb(&rio, clientfd);
     Rio_readlineb(&rio,buffer,MAXLINE);
     printf("Message from Server:");
     //displaying the message in buffer on the console
