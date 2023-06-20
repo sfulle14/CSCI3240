@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 
 
    /* error occurred */
-   if (pid1 < 0) { 
+   if (pid1 < 0 || pid2 < 0) { 
       perror("Fork failed");
    }
 
