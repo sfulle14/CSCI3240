@@ -58,8 +58,6 @@ int main(int argc, char *argv[])
                                    MAXLINE,client_port, MAXLINE, 0);
         Pthread_create(&tid, NULL, thread, connfdp);
         printf("Connected to (%s, %s)\n", client_hostname, client_port);
-        //Pthread_join(tid, NULL);
-        printf("(%s, %s) disconnected\n", client_hostname, client_port);
     }
 
     exit(0); 
@@ -159,7 +157,6 @@ void serverFunction(int connfd){
             case 5:
                 bzero(buffer,MAXLINE);
                 n= read(connfd, buffer, MAXLINE);
-                printf("Message from Client: %s\n",buffer);
                 write(connfd,connectionClosed,strlen(connectionClosed));
                 bzero(buffer,MAXLINE);
                 break;
