@@ -10,6 +10,7 @@
 #define DEPTLIMIT 100
 #define SALARYLIMIT 10
 
+//Define struct globally
 struct Struct_Employee_Info{
    char firstName[NAMELIMIT];
    char lastName[NAMELIMIT];
@@ -18,10 +19,51 @@ struct Struct_Employee_Info{
    int salary;
 };
 
+//define global variables
+int readcnt=0;
+sem_t mutex, w;
+
 //function declaration
 char* SearchByName(struct Struct_Employee_Info emp[], char Name[NAMELIMIT]);
 char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT]);
 char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char comparisonOperator[2]);
+void serverFunction(int connfd);
+void *thread(void *vargp);
+
+
+
+int main(int argc, char *argv[])
+{
+    int listenfd;
+    int *connfdp; //file descriptor to communicate with the client
+    socklen_t clientlen;
+    struct sockaddr_storage clientaddr;  /* Enough space for any address */
+    char client_hostname[MAXLINE], client_port[MAXLINE];
+    pthread_t tid;
+    
+    if (argc != 2) {
+        fprintf(stderr, "usage: %s <port>\n", argv[0]);
+        exit(0);
+    }
+    
+    listenfd = Open_listenfd(argv[1]);
+    //Server runs in the infinite loop.
+    //To stop the server process, it needs to be killed using the Ctrl+C key.
+    while (1) {
+        clientlen = sizeof(struct sockaddr_storage);
+        // wait for the connection from the client.
+        connfdp = Malloc(sizeof(int));
+        *connfdp = Accept(listenfd, (SA *)&clientaddr, &clientlen);
+        Getnameinfo((SA *) &clientaddr, clientlen, client_hostname,
+                                   MAXLINE,client_port, MAXLINE, 0);
+        Pthread_create(&tid, NULL, thread, connfdp);
+        printf("Connected to (%s, %s)\n", client_hostname, client_port);
+        //Pthread_join(tid, NULL);
+        printf("(%s, %s) disconnected\n", client_hostname, client_port);
+    }
+
+    exit(0); 
+}
 
 //function the server will call while interacting with client
 void serverFunction(int connfd){
@@ -128,39 +170,6 @@ void serverFunction(int connfd){
     }
     fclose(fp);
     return; 
-}
-
-int main(int argc, char *argv[])
-{
-    int listenfd;
-    int connfd; //file descriptor to communicate with the client
-    socklen_t clientlen;
-    struct sockaddr_storage clientaddr;  /* Enough space for any address */
-    char client_hostname[MAXLINE], client_port[MAXLINE];
-    
-
-    if (argc != 2) {
-        fprintf(stderr, "usage: %s <port>\n", argv[0]);
-        exit(0);
-    }
-    
-    listenfd = Open_listenfd(argv[1]);
-    //Server runs in the infinite loop.
-    //To stop the server process, it needs to be killed using the Ctrl+C key.
-    while (1) {
-        clientlen = sizeof(struct sockaddr_storage);
-        // wait for the connection from the client.
-        connfd = Accept(listenfd, (SA *)&clientaddr, &clientlen);
-        Getnameinfo((SA *) &clientaddr, clientlen, client_hostname,
-                                   MAXLINE,client_port, MAXLINE, 0);
-        printf("Connected to (%s, %s)\n", client_hostname, client_port);
-        //function to interact with the client
-        serverFunction(connfd);
-        Close(connfd);
-        printf("(%s, %s) disconnected\n", client_hostname, client_port);
-    }
-
-    exit(0); 
 }
 
 
@@ -376,4 +385,16 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
 
    p3 = strSal;
    return p3;
+}
+
+/*Thread routine*/
+void *thread(void *vargp){
+    int connfd = *((int *)vargp);
+    Pthread_detach(pthread_self());
+    Free(vargp);
+    
+    //function to interact with the client
+    serverFunction(connfd);
+    Close(connfd);    
+    return NULL;
 }
