@@ -23,6 +23,7 @@ struct Struct_Employee_Info{
 int readcnt=0;
 sem_t mutex, w;
 
+
 //function declaration
 char* SearchByName(struct Struct_Employee_Info emp[], char Name[NAMELIMIT]);
 char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT]);
@@ -31,15 +32,16 @@ void serverFunction(int connfd);
 void *thread(void *vargp);
 
 
-
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
     int listenfd;
     int *connfdp; //file descriptor to communicate with the client
     socklen_t clientlen;
     struct sockaddr_storage clientaddr;  /* Enough space for any address */
     char client_hostname[MAXLINE], client_port[MAXLINE];
     pthread_t tid;
+    
+    sem_init(&mutex,0,1);
+    sem_init(&w, 0, 1);
     
     if (argc != 2) {
         fprintf(stderr, "usage: %s <port>\n", argv[0]);
@@ -102,50 +104,90 @@ void serverFunction(int connfd){
         choice = atoi(buffer);
         switch(choice){
             case 1:
+                P(&w);
                 bzero(buffer,MAXLINE);
                 n= read(connfd, buffer, MAXLINE);
-
+                
+                
                 sscanf(buffer, "%[^,],%[^,],%[^,],%[^,] ,%d ", emp[count].firstName, emp[count].lastName, emp[count].zipCode, emp[count].department, &emp[count].salary);
                 count++;
 
                 fprintf(fp, "%s","\n");
                 fprintf(fp, "%s", buffer);
-
+                
+                
                 write(connfd,successMessage,strlen(successMessage));
                 bzero(buffer,MAXLINE);
+                V(&w);
                 break;
             case 2:
-                bzero(buffer,MAXLINE);
-                //get input from client
-                n= read(connfd, buffer, MAXLINE);
-                 
-                //search database(csv)
-                searchName = SearchByName(emp, buffer);
-                write(connfd,searchName,strlen(searchName));
-                bzero(buffer,MAXLINE);
-                break;
-            case 3:
+                P(&mutex);
+                readcnt++;
+                if(readcnt==1){
+                    P(&w);
+                }
+                V(&mutex);
+                
                 bzero(buffer,MAXLINE);
                 //get input from client
                 n= read(connfd, buffer, MAXLINE);
                 
+                //search database(csv)
+                searchName = SearchByName(emp, buffer);
+                
+                write(connfd,searchName,strlen(searchName));
+                bzero(buffer,MAXLINE);
+                
+                P(&mutex);
+                readcnt--;
+                if(readcnt==0){
+                    V(&w);
+                }
+                V(&mutex);
+                break;
+            case 3:
+                P(&mutex);
+                readcnt++;
+                if(readcnt==1){
+                    P(&w);
+                }
+                V(&mutex);
+                
+                bzero(buffer,MAXLINE);
+                //get input from client
+                n= read(connfd, buffer, MAXLINE);
+                     
                 //search database(csv)
                 searchZip = SearchByZipCode(emp, buffer);
                 
                 //return search to client
                 write(connfd,searchZip,strlen(searchZip));
                 bzero(buffer,MAXLINE);
+                
+                P(&mutex);
+                readcnt--;
+                if(readcnt==0){
+                    V(&w);
+                }
+                V(&mutex);
                 break;
             case 4:
+                P(&mutex);
+                readcnt++;
+                if(readcnt==1){
+                    P(&w);
+                }
+                V(&mutex);
+                
                 bzero(buffer,MAXLINE);
                 //get salary from client
                 n= read(connfd, buffer, MAXLINE);
                 salary = atoi(buffer);
                 write(connfd,buffer,strlen(buffer));
                 bzero(buffer,MAXLINE);
-
                 //get comparison type
                 n= read(connfd, buffer, MAXLINE);
+                
                 
                 //search database(csv)
                 searchSalary = SearchBySalary(emp, salary, buffer);
@@ -153,6 +195,13 @@ void serverFunction(int connfd){
                 //return search to client
                 write(connfd,searchSalary,strlen(searchSalary));
                 bzero(buffer,MAXLINE);
+                
+                P(&mutex);
+                readcnt--;
+                if(readcnt==0){
+                    V(&w);
+                }
+                V(&mutex);
                 break;
             case 5:
                 bzero(buffer,MAXLINE);
