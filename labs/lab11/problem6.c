@@ -1,19 +1,25 @@
+//
+//Implement a parallel radix sort algorithm in C using pthreads.
+//
+
 #include <pthread.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+#define LENGTH 5
+#define NUMTHREADS 2
 
 //gloabl variables
 pthread_mutex_t mutex;
-int counter = 0;
+int arr[LENGTH] = {3,1,4,5,2};
+
+
 
 //thread function
 void *my_thread_function(void *arg)
 {
-   for (int i = 0; i < 1000000; i++) {
-      pthread_mutex_lock(&mutex);
-      counter++;
-      pthread_mutex_unlock(&mutex);
-   }
-   return; 
+   
+   return NULL; 
 }
 
 

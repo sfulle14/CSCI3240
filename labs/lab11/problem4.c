@@ -5,17 +5,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define LENGTH 5
+#define LENGTH 6
 #define NUMTHREADS 2
 
 //declare functions
 void merge(int low, int middle, int high);
-void merge_sort(int low, int high);
+void merge_sort(int* arr, int low, int high);
 
 
 //gloabl variables
 pthread_mutex_t mutex;
-int arr[LENGTH] = {3,1,4,5,2};
+int arr[LENGTH] = {3,1,4,5,2,6};
 int part=0;
 
 //thread function
@@ -28,8 +28,8 @@ void *my_thread_function(void *arg)
    int middle = low + (high - low) / 2;
 
    if(low < high){
-      merge_sort(low, middle);
-      merge_sort(middle+1, high);
+      merge_sort(arr, low, middle);
+      merge_sort(arr, middle, high);
       merge(low, middle, high);
    }
    return NULL; 
@@ -66,13 +66,13 @@ int main() {
 }
 
 //standard merge sort code
-void merge_sort(int low, int high){
-   int middle = low + (high - low) /2;
+void merge_sort(int* arr, int low, int high){
+   int middle = low + (high - low) / 2;
 
    if(low < high){
-      merge_sort(low, middle);
+      merge_sort(arr, low, middle);
 
-      merge_sort(middle+1, high);
+      merge_sort(arr, middle+1, high);
 
       merge(low, middle, high);
    }
@@ -80,17 +80,18 @@ void merge_sort(int low, int high){
 
 //Function to merge data together
 void merge(int low, int middle, int high) {
-   int i,j,k;
-   int lint = middle - low + 1;
-   int rint = high - middle;
-   int* left = malloc(sizeof(int) * (LENGTH/NUMTHREADS));
-   int* right = malloc(sizeof(int) * (LENGTH/NUMTHREADS));
-
+   int i,j;
    int n1 = middle - low + 1;
    int n2 = high - middle;
+   int* left = (int*)malloc(sizeof(int) * n1);
+   int* right = (int*)malloc(sizeof(int) * n2);
 
+   /*
+   int lint = middle - low + 1;
+   int rint = high - middle;
    left = &lint;
    right = &rint;
+   */
 
    for(i=0; i<n1; i++){
       left[i] = arr[i + low];
@@ -100,7 +101,7 @@ void merge(int low, int middle, int high) {
       right[i] = arr[i + middle + 1];
    }
    
-   k = low;
+   int k = low;
    i=j=0;
 
    while(i<n1 && j<n2){
@@ -119,4 +120,6 @@ void merge(int low, int middle, int high) {
    while (j<n2){
       arr[k++] = right[j++];
    }
+   free(left);
+   free(right);
 }
