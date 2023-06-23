@@ -23,7 +23,7 @@ void quickSort(int *arr, int low, int high);
 void *my_thread_function(void *arg)
 {
    quicksort_parameters* parameters = arg;
-   c_quickSort(parameters -> arr, parameters->low, parameters->high, parameters->depthOfThread);
+   c_quickSort(parameters->arr, parameters->low, parameters->high, parameters->depthOfThread);
    return NULL; 
 }
 
@@ -41,12 +41,14 @@ int main() {
    return 0;
 }
 
+//function to swap variables
 void swap(int *a, int*b){
    int t= *a;
    *a = *b;
    *b = t;
 }
 
+//function to find the array partition
 int partition(int *arr, int low, int high, int pivot){
    int pivotValue = arr[pivot];
    swap(&arr[pivot], &arr[high]);
@@ -55,12 +57,14 @@ int partition(int *arr, int low, int high, int pivot){
    for(int i=low; i<high; i++){
       if(arr[i] <= pivotValue){
          swap(&arr[i], &arr[s]);
+         s++;
       }
    }
    swap(&arr[s], &arr[high]);
    return s;
 }
 
+//concurrent quicksort funciton
 void c_quickSort(int *arr, int low, int high, int depthOfThread){
    if(low<high){
       int pivotPos = low + (high-low) / 2;
@@ -82,6 +86,7 @@ void c_quickSort(int *arr, int low, int high, int depthOfThread){
    }
 }
 
+//sequencial quicksort function
 void quickSort(int *arr, int low, int high){
    if(low<high){
       int pivotPos = low + (high-low) / 2;
