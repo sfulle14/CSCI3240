@@ -20,6 +20,7 @@ struct Struct_Employee_Info{
 };
 
 //define global variables
+struct Struct_Employee_Info emp[MAXSTRUCT];
 int readcnt=0;
 sem_t mutex, w;
 
@@ -80,7 +81,7 @@ void serverFunction(int connfd){
     char* searchZip;
     char* searchSalary;
     int salary;
-    struct Struct_Employee_Info emp[MAXSTRUCT];
+    
     
     //open file
    fp = fopen(filename, "a+");
