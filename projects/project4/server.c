@@ -125,6 +125,10 @@ void serverFunction(int connfd){
                 //add the record to the csv file
                 fprintf(fp, "%s","\n");
                 fprintf(fp, "%s", buffer);
+                //close file pointer so data is written
+                fclose(fp);
+                //reopen file pointer
+                fp = fopen(filename, "a+");
                 
                 //write back to client
                 write(connfd,successMessage,strlen(successMessage));
