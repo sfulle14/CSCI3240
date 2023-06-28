@@ -44,9 +44,11 @@ int main(int argc, char *argv[])
         read(clientfd,buffer,MAXLINE);
 
         //make a choice based on user input
+        //until the user inputs 5
         switch(choice){
             //get record from user and sent to server as a string
             case 1:
+                //get first name from user
                 bzero(str,MAXLINE);
                 bzero(buffer,MAXLINE);
                 printf("Enter first name: ");   
@@ -54,24 +56,28 @@ int main(int argc, char *argv[])
                 strncpy(buffer, str, strlen(str)-1);
                 strncat(buffer, ",", 1);
                 
+                //get last name from user
                 bzero(str,MAXLINE);
                 printf("Enter last name: ");           
                 Fgets(str,MAXLINE,stdin);
                 strncat(buffer, str, strlen(str)-1);
                 strncat(buffer, ",", 1);
 
+                //get zip code from user
                 printf("Enter Zip Code: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
                 strncat(buffer, str, strlen(str)-1);
                 strncat(buffer, ",", 1);
  
+                //get department from user
                 printf("Enter Department: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
                 strncat(buffer, str, strlen(str)-1);
                 strncat(buffer, ",", 1);
 
+                //get salary from user
                 printf("Enter Salary: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
@@ -90,6 +96,7 @@ int main(int argc, char *argv[])
                 break;
             //Search for records by name
             case 2:
+                //get first name from user
                 bzero(buffer,MAXLINE);
                 printf("Enter first name: ");
                 bzero(str,MAXLINE);
@@ -97,6 +104,7 @@ int main(int argc, char *argv[])
                 strncpy(buffer, str, strlen(str)-1);
                 strncat(buffer, ",", 1);
 
+                //get last name from user
                 printf("Enter last name: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
@@ -115,6 +123,7 @@ int main(int argc, char *argv[])
                 break;
             //search for records by Zip Code
             case 3:
+                //get zip code from user
                 bzero(buffer,MAXLINE);
                 printf("Enter Zip Code: ");
                 bzero(str,MAXLINE);
@@ -134,6 +143,7 @@ int main(int argc, char *argv[])
                 break;
             //Search for records comparing salary
             case 4:
+                //get salary from user
                 bzero(buffer,MAXLINE);
                 printf("Enter Salary: ");
                 bzero(str,MAXLINE);
@@ -147,6 +157,7 @@ int main(int argc, char *argv[])
                 bzero(buffer,MAXLINE);
                 bzero(str,MAXLINE);   
                 
+                //get comparision type from user
                 printf("Enter Comparision Type [’>’,’<’,’==’,’>=’,’<=’]: ");
                 bzero(str,MAXLINE);
                 Fgets(str,MAXLINE,stdin);
@@ -166,6 +177,7 @@ int main(int argc, char *argv[])
                 break;
             //Terminate connection
             case 5:
+                //close and exit the client program
                 Close(clientfd);
                 exit(0);
                 break;
@@ -176,8 +188,6 @@ int main(int argc, char *argv[])
         }
     }while(choice != 5);
     
-
-
     Close(clientfd);
     return 0;
 }

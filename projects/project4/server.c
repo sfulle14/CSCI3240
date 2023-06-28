@@ -68,22 +68,23 @@ int main(int argc, char *argv[]){
 
 //function the server will call while interacting with client
 void serverFunction(int connfd){
-    char buffer[MAXLINE]; //MAXLINE = 8192 defined in csapp.h
-    char successMessage[MAXLINE] = "Record added Sucessfully!!\n";
-    char connectionClosed[MAXLINE] = "Connection Closed!!";
-    int choice;
-    size_t n;
-    FILE *fp;
-    char* filename = "records.csv";
-    char buf[FILESIZE];
-    int count = 0;
-    char* searchName;
-    char* searchZip;
-    char* searchSalary;
-    int salary;
+   //define local variables
+   char buffer[MAXLINE]; //MAXLINE = 8192 defined in csapp.h
+   char successMessage[MAXLINE] = "Record added Sucessfully!!\n";
+   char connectionClosed[MAXLINE] = "Connection Closed!!";
+   int choice;
+   size_t n;
+   FILE *fp;
+   char* filename = "records.csv";
+   char buf[FILESIZE];
+   int count = 0;
+   char* searchName;
+   char* searchZip;
+   char* searchSalary;
+   int salary;
     
     
-    //open file
+   //open file
    fp = fopen(filename, "a+");
 
    //read in the csv into the struct
@@ -91,6 +92,7 @@ void serverFunction(int connfd){
       sscanf(buf, "%[^,],%[^,],%[^,],%[^,] ,%d ", emp[count].firstName, emp[count].lastName, emp[count].zipCode, emp[count].department, &emp[count].salary);
       count++;
    }
+   //fill out the rest of the struct as NULL
    for(int i=count; i<MAXSTRUCT; i++){
       strncpy(emp[i].firstName, "\0", 1);
    }
@@ -101,23 +103,32 @@ void serverFunction(int connfd){
 
     //n is the user input
     while((n= read(connfd, buffer, MAXLINE)) != 0){
+        //get user choice
         write(connfd,buffer,strlen(buffer));
+        //convert user choice to an integer from char
         choice = atoi(buffer);
+
+        //pick an action based on the users choice
         switch(choice){
             case 1:
                 P(&w);
+                //reset buffer
                 bzero(buffer,MAXLINE);
+                //read in data from client
                 n= read(connfd, buffer, MAXLINE);
                 
-                
+                //add record to emp struct
                 sscanf(buffer, "%[^,],%[^,],%[^,],%[^,] ,%d ", emp[count].firstName, emp[count].lastName, emp[count].zipCode, emp[count].department, &emp[count].salary);
+                //increase the count of records
                 count++;
 
+                //add the record to the csv file
                 fprintf(fp, "%s","\n");
                 fprintf(fp, "%s", buffer);
                 
-                
+                //write back to client
                 write(connfd,successMessage,strlen(successMessage));
+                //reset buffer
                 bzero(buffer,MAXLINE);
                 V(&w);
                 break;
@@ -129,14 +140,17 @@ void serverFunction(int connfd){
                 }
                 V(&mutex);
                 
+                //reset buffer
                 bzero(buffer,MAXLINE);
-                //get input from client
+                //read in data from client
                 n= read(connfd, buffer, MAXLINE);
                 
                 //search database(csv)
                 searchName = SearchByName(emp, buffer);
                 
+                //write back to client
                 write(connfd,searchName,strlen(searchName));
+                //reset buffer
                 bzero(buffer,MAXLINE);
                 
                 P(&mutex);
@@ -154,8 +168,9 @@ void serverFunction(int connfd){
                 }
                 V(&mutex);
                 
+                //reset buffer
                 bzero(buffer,MAXLINE);
-                //get input from client
+                //read in data from client
                 n= read(connfd, buffer, MAXLINE);
                      
                 //search database(csv)
@@ -163,6 +178,7 @@ void serverFunction(int connfd){
                 
                 //return search to client
                 write(connfd,searchZip,strlen(searchZip));
+                //reset buffer
                 bzero(buffer,MAXLINE);
                 
                 P(&mutex);
@@ -180,13 +196,17 @@ void serverFunction(int connfd){
                 }
                 V(&mutex);
                 
+                //reset buffer
                 bzero(buffer,MAXLINE);
-                //get salary from client
+                //read in data from client
                 n= read(connfd, buffer, MAXLINE);
+                //convert input from char to int
                 salary = atoi(buffer);
+                //write back to client
                 write(connfd,buffer,strlen(buffer));
+                //reset buffer
                 bzero(buffer,MAXLINE);
-                //get comparison type
+                //read in data from client
                 n= read(connfd, buffer, MAXLINE);
                 
                 
@@ -195,6 +215,7 @@ void serverFunction(int connfd){
                 
                 //return search to client
                 write(connfd,searchSalary,strlen(searchSalary));
+                //reset buffer
                 bzero(buffer,MAXLINE);
                 
                 P(&mutex);
@@ -205,9 +226,13 @@ void serverFunction(int connfd){
                 V(&mutex);
                 break;
             case 5:
+                //reset buffer
                 bzero(buffer,MAXLINE);
+                //read in data from client
                 n= read(connfd, buffer, MAXLINE);
+                //write back to client
                 write(connfd,connectionClosed,strlen(connectionClosed));
+                //reset buffer
                 bzero(buffer,MAXLINE);
                 break;
             default:
@@ -215,6 +240,7 @@ void serverFunction(int connfd){
                 break;
         }
     }
+    //close the file pointer
     fclose(fp);
     return; 
 }
@@ -229,11 +255,13 @@ char* SearchByName(struct Struct_Employee_Info emp[], char Name[NAMELIMIT]){
    char firstLast[NAMELIMIT*2];
    char noRecord[MAXLINE] = "No record found!!\n";
     
+   //clearing the strings 
    strncpy(str, "",FILESIZE);
    strcpy(firstLast, "");
 
    //loop to compare all names to provided name
    for(int i=0; i<MAXSTRUCT; i++){
+      //combining the name to compare in the loop
       strcpy(firstLast, "");
       strncat(firstLast, emp[i].firstName,strlen(emp[i].firstName));
       strncat(firstLast, ",", 1);
@@ -258,7 +286,7 @@ char* SearchByName(struct Struct_Employee_Info emp[], char Name[NAMELIMIT]){
    if(strlen(str)==0){
       strncpy(str,noRecord,strlen(noRecord));
    }
-
+   //setting the string to a char* so it can be returned
    p = str;
    return p;
 }
@@ -272,6 +300,7 @@ char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT])
    char salary[SALARYLIMIT];
    char noRecord[MAXLINE] = "No record found!!\n";
     
+   //clearing the string of all values 
    strncpy(strZip,"",FILESIZE);
 
    //loop to compare all zipCodes to provided name
@@ -301,6 +330,7 @@ char* SearchByZipCode(struct Struct_Employee_Info emp[], char zipCode[ZIPLIMIT])
       strncpy(strZip,noRecord,strlen(noRecord));
    }
 
+   //setting the string to a char* so it can be returned
    p2 = strZip;
    return p2;
 }
@@ -314,6 +344,7 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
    char strSalary[SALARYLIMIT];
    char noRecord[MAXLINE] = "No record found!!\n";
     
+   //clearing the string of all data 
    strncpy(strSal, "",FILESIZE);
 
    //loop through all comparison operators
@@ -429,7 +460,7 @@ char* SearchBySalary(struct Struct_Employee_Info emp[], int salary, char compari
       strncpy(strSal,noRecord,strlen(noRecord));
    }
 
-
+   //setting the string to a char* so it can be returned
    p3 = strSal;
    return p3;
 }
